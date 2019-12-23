@@ -32,7 +32,7 @@ jobs:
 
       - run: mvn install -DskipTests
 
-      - run: mvn dependency:go-offline
+      - run: mvn dependency:go-offline cobertura:cobertura
 
       - save_cache:
           paths:
@@ -41,5 +41,7 @@ jobs:
 
       # run tests!
       - run: mvn integration-test
+
+      - run: curl -s https://codecov.io/bash | bash
 
       # completed test successfully!
