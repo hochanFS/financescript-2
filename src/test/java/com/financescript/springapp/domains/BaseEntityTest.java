@@ -1,4 +1,4 @@
-package com.financescript.springapp.models;
+package com.financescript.springapp.domains;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
