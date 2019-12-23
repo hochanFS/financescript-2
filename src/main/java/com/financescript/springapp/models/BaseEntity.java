@@ -1,4 +1,4 @@
-package com.financescript.springapp.model;
+package com.financescript.springapp.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
