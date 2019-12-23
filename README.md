@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/hochanFS/financescript-2.svg?style=svg)](https://circleci.com/gh/hochanFS/financescript-2)
-![Test Coverage](target/jacoco.svg)
+[![codecov](https://codecov.io/gh/hochanFS/financescript-2/branch/master/graph/badge.svg)](https://codecov.io/gh/hochanFS/financescript-2)
 
 # financescript-2
 ### *Public financial platform for ongoing statistical research*
