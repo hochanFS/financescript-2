@@ -1,5 +1,6 @@
-[![CircleCI](https://circleci.com/gh/hochanFS/financescript-2.svg?style=svg)](https://circleci.com/gh/hochanFS/financescript-2)
+
 [![codecov](https://codecov.io/gh/hochanFS/financescript-2/branch/master/graph/badge.svg)](https://codecov.io/gh/hochanFS/financescript-2)
+[![CircleCI](https://circleci.com/gh/hochanFS/financescript-2.svg?style=svg)](https://circleci.com/gh/hochanFS/financescript-2)
 
 # financescript-2
 ### *Public financial platform for ongoing statistical research*
@@ -18,8 +19,8 @@ Amazon Web Service | Deployment
 CircleCI | Integration Testing
 CSS | Enhancing web GUI
 H2 | Development database
-Java SDK 11 | primary backend language
-JavaScript | supportive backend language
+Java SDK 11 | Primary backend language
+JavaScript | Secondary backend language
 JUnit | Unit testing
 Lombok | Logging, builder design pattern, convenience
 Mockito | Separation of concerns in unit testing
