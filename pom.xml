@@ -78,11 +78,6 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>0.8.5</version>
         </dependency>
-        <dependency>
-            <groupId>com.sigpwned</groupId>
-            <artifactId>jacoco-badge-maven-plugin</artifactId>
-            <version>0.1.4</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -90,70 +85,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*Mojo.class</exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>prepare-test-coverage</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <propertyName>surefireArgLine</propertyName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>generate-report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>verify-test-coverage</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>BUNDLE</element>
-                                    <excludes>
-                                        <exclude>*Mojo</exclude>
-                                    </excludes>
-                                    <limits>
-                                        <limit>
-                                            <counter>INSTRUCTION</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>50%</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <configuration>
-                    <excludes>
-                        <!-- Standard approach to excluding integration tests -->
-                        <exclude>**/IT*.java</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -172,25 +103,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.sigpwned</groupId>
-                <artifactId>jacoco-badge-maven-plugin</artifactId>
-                <version>0.1.4</version>
-                <executions>
-                    <execution>
-                        <id>generate-jacoco-badge</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>badge</goal>
-                        </goals>
-                        <configuration>
-                            <passing>50</passing>
-                            <metric>instruction</metric>
-                            <badgeFile>${project.build.directory}/jacoco.svg</badgeFile>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
