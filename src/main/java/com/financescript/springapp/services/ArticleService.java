@@ -5,7 +5,7 @@ import com.financescript.springapp.domains.Article;
 import java.util.List;
 
 public interface ArticleService {
-    List<Article> findAllByOrderByUpdateTimeDesc();
+    List<Article> findAllByOrderByCreationTimeDesc();
 
     Article findById(Long id);
 

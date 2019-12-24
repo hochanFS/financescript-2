@@ -37,9 +37,9 @@ class ArticleJpaServiceTest {
     }
 
     @Test
-    void findAllByOrderByUpdateTimeDesc() {
-        articleService.findAllByOrderByUpdateTimeDesc();
-        verify(articleRepository, times(1)).findAllByOrderByUpdateTimeDesc();
+    void findAllByOrderByCreationTimeDesc() {
+        articleService.findAllByOrderByCreationTimeDesc();
+        verify(articleRepository, times(1)).findAllByOrderByCreationTimeDesc();
     }
 
     @Test

@@ -17,8 +17,8 @@ public class ArticleJpaService implements ArticleService {
     }
 
     @Override
-    public List<Article> findAllByOrderByUpdateTimeDesc() {
-        return articleRepository.findAllByOrderByUpdateTimeDesc();
+    public List<Article> findAllByOrderByCreationTimeDesc() {
+        return articleRepository.findAllByOrderByCreationTimeDesc();
     }
 
     @Override

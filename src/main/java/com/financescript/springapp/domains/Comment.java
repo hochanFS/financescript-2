@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,22 +16,23 @@ import java.util.List;
 public class Comment extends BaseEntity {
 
     @ManyToOne
-    private User user;
+    private User author;
 
     @ManyToOne
     private Article article;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<SubComment> subComments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
+    private List<SubComment> subComments = new ArrayList<>();
 
     @Lob
     private String contents;
 
     @Builder
-    public Comment(Long id, User user, List<SubComment> subComments, String contents) {
+    public Comment(Long id, User author, List<SubComment> subComments, String contents) {
         super(id);
-        this.user = user;
-        this.subComments = subComments;
+        this.author = author;
+        if (subComments != null)
+            this.subComments = subComments;
         this.contents = contents;
     }
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,8 +22,8 @@ public class Article extends BaseEntity {
     @Lob
     private String contents;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     public Article(Long id, User author, String title, String contents, List<Comment> comments) {
@@ -30,6 +31,7 @@ public class Article extends BaseEntity {
         this.author = author;
         this.title = title;
         this.contents = contents;
-        this.comments = comments;
+        if (comments != null)
+            this.comments = comments;
     }
 }

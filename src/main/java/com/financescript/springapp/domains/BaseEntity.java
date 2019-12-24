@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
@@ -21,17 +20,9 @@ public class BaseEntity implements Serializable {
     @Column(updatable = false)
     private LocalDateTime creationTime;
 
-    @Column
-    private LocalDateTime updateTime;
-
     @PrePersist
     public void setCreationDateTime() {
         this.creationTime = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void setChangeDateTime() {
-        this.updateTime = LocalDateTime.now();
     }
 
     public boolean isNew() {
