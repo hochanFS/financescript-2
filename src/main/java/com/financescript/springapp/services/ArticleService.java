@@ -1,14 +1,13 @@
 package com.financescript.springapp.services;
 
 import com.financescript.springapp.domains.Article;
-import com.financescript.springapp.domains.User;
 
 import java.util.List;
 
 public interface ArticleService {
-    List<Article> findRecent10();
+    List<Article> findAllByOrderByUpdateTimeDesc();
 
-    Article findById();
+    Article findById(Long id);
 
     Article save(Article article);
 
@@ -16,5 +15,5 @@ public interface ArticleService {
 
     void delete(Article article);
 
-    Article findByUser(User user);
+    List<Article> findAllByTitleLike(String search);
 }

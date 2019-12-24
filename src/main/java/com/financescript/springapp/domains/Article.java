@@ -14,7 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 public class Article extends BaseEntity {
     @ManyToOne
-    private User user;
+    private User author;
+
+    private String title;
 
     @Lob
     private String contents;
@@ -23,9 +25,10 @@ public class Article extends BaseEntity {
     private List<Comment> comments;
 
     @Builder
-    public Article(Long id, User user, String contents, List<Comment> comments) {
+    public Article(Long id, User author, String title, String contents, List<Comment> comments) {
         super(id);
-        this.user = user;
+        this.author = author;
+        this.title = title;
         this.contents = contents;
         this.comments = comments;
     }
