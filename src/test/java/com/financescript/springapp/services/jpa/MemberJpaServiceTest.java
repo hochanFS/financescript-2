@@ -1,6 +1,9 @@
 package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Member;
+import com.financescript.springapp.dto.MemberDto;
+import com.financescript.springapp.dto.MemberDtoToMember;
+import com.financescript.springapp.dto.MemberToMemberDto;
 import com.financescript.springapp.repositories.MemberRepository;
 import com.financescript.springapp.services.MemberService;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +23,12 @@ class MemberJpaServiceTest {
     @Mock
     MemberRepository memberRepository;
 
+    @Mock
+    MemberToMemberDto memberToMemberDto;
+
+    @Mock
+    MemberDtoToMember memberDtoToMember;
+
     MemberService memberService;
 
     private final Long USER1_ID = 1L;
@@ -29,7 +38,7 @@ class MemberJpaServiceTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         List<Member> members = new ArrayList<>();
-        memberService = new MemberJpaService(memberRepository);
+        memberService = new MemberJpaService(memberRepository, memberDtoToMember, memberToMemberDto);
         member1 = new Member();
         member1.setId(USER1_ID);
         members.add(member1);
@@ -54,5 +63,13 @@ class MemberJpaServiceTest {
     void deleteById() {
         memberService.deleteById(USER1_ID);
         verify(memberRepository, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    void saveMemberDto() {
+        MemberDto memberDto = new MemberDto();
+        when(memberDtoToMember.convert(any(MemberDto.class))).thenReturn(member1);
+        memberService.save(memberDto);
+        verify(memberRepository, times(1)).save(any(Member.class));
     }
 }
