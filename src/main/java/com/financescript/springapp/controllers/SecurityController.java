@@ -42,8 +42,8 @@ public class SecurityController {
         return SIGN_UP_PAGE;
     }
 
-    @PostMapping(value="/")
-    public String processSignUpForm(@Valid @ModelAttribute("user") MemberDto memberDto, BindingResult bindingResult, Model model) {
+    @PostMapping(value="/register")
+    public String processSignUpForm(@Valid @ModelAttribute("member") MemberDto memberDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return SIGN_UP_PAGE;
         }
