@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/info_fg :: metainfo ('FinanceScript 2.0')">Meta info goes here
+<head th:replace="fragments/info_fg :: metainfo ('Sign up')">Meta info goes here
 </head>
 <body>
 <div>
@@ -23,7 +23,7 @@
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-envelope"></span>
                 </span>
-                <input type="email" th:field="*{username}"
+                <input type="text" th:field="*{username}"
                        placeholder="User name" class="form-control" required/>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
@@ -41,7 +41,7 @@
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-envelope"></span>
                 </span>
-                <input type="email" th:field="*{password}"
+                <input type="password" th:field="*{password}"
                        placeholder="Password" class="form-control" required/>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
@@ -50,7 +50,7 @@
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-envelope"></span>
                 </span>
-                <input type="email" th:field="*{matchingPassword}"
+                <input type="password" th:field="*{matchingPassword}"
                        placeholder="Confirm your password" class="form-control" required/>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             </div>
