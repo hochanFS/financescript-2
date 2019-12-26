@@ -16,15 +16,8 @@ public class SubComment extends BaseEntity {
     private Comment comment;
 
     @ManyToOne
-    private User author;
+    private User user;
 
     @Lob
     private String contents;
-
-    @Builder
-    public SubComment(Long id, User author, String contents) {
-        super(id);
-        this.author = author;
-        this.contents = contents;
-    }
 }

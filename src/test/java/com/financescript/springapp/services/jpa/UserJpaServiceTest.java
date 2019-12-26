@@ -2,6 +2,9 @@ package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.SubComment;
 import com.financescript.springapp.domains.User;
+import com.financescript.springapp.repositories.ArticleRepository;
+import com.financescript.springapp.repositories.CommentRepository;
+import com.financescript.springapp.repositories.SubCommentRepository;
 import com.financescript.springapp.repositories.UserRepository;
 import com.financescript.springapp.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,14 +34,17 @@ class UserJpaServiceTest {
         MockitoAnnotations.initMocks(this);
         List<User> users = new ArrayList<>();
         userService = new UserJpaService(userRepository);
-        user1 = User.builder().id(USER1_ID).build();
+        user1 = new User();
+        user1.setId(USER1_ID);
         users.add(user1);
         when(userRepository.findAll()).thenReturn(users);
     }
 
     @Test
     void save() {
-        userService.save(User.builder().id(2L).build());
+        User user2 = new User();
+        user2.setId(2L);
+        userService.save(user2);
         verify(userRepository, times(1)).save(any(User.class));
     }
 

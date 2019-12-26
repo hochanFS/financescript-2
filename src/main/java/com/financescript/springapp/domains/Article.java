@@ -1,13 +1,13 @@
 package com.financescript.springapp.domains;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -15,23 +15,20 @@ import java.util.List;
 @NoArgsConstructor
 public class Article extends BaseEntity {
     @ManyToOne
-    private User author;
+    private User user;
 
     private String title;
 
     @Lob
     private String contents;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
-    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Comment> comments = new HashSet<>();
 
-    @Builder
-    public Article(Long id, User author, String title, String contents, List<Comment> comments) {
-        super(id);
-        this.author = author;
-        this.title = title;
-        this.contents = contents;
-        if (comments != null)
-            this.comments = comments;
+    public Article addComment(Comment comment){
+        comment.setArticle(this);
+        this.comments.add(comment);
+        return this;
     }
+
 }

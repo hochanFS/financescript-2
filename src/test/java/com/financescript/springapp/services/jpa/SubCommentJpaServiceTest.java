@@ -31,14 +31,17 @@ class SubCommentJpaServiceTest {
         MockitoAnnotations.initMocks(this);
         List<SubComment> subComments = new ArrayList<>();
         subCommentService = new SubCommentJpaService(subCommentRepository);
-        subComment1 = SubComment.builder().id(SUB_COMMENT1_ID).build();
+        subComment1 = new SubComment();
+        subComment1.setId(SUB_COMMENT1_ID);
         subComments.add(subComment1);
         when(subCommentRepository.findAll()).thenReturn(subComments);
     }
 
     @Test
     void save() {
-        subCommentService.save(SubComment.builder().id(2L).build());
+        SubComment subComment2 = new SubComment();
+        subComment2.setId(2L);
+        subCommentService.save(subComment2);
         verify(subCommentRepository, times(1)).save(any(SubComment.class));
     }
 

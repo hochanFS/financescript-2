@@ -5,6 +5,7 @@ import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -28,6 +29,7 @@ public class ArticleJpaService implements ArticleService {
     }
 
     @Override
+    @Transactional
     public Article save(Article article) {
         return articleRepository.save(article);
     }
@@ -38,6 +40,7 @@ public class ArticleJpaService implements ArticleService {
     }
 
     @Override
+    @Transactional
     public void delete(Article article) {
         articleRepository.delete(article);
     }

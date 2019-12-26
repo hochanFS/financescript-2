@@ -30,7 +30,8 @@ class ArticleJpaServiceTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         articleService = new ArticleJpaService(articleRepository);
-        article1 = Article.builder().id(ARTICLE_ID1).build();
+        article1 = new Article();
+        article1.setId(ARTICLE_ID1);
         articles = new ArrayList<>();
         articles.add(article1);
         when(articleRepository.findAll()).thenReturn(articles);
@@ -50,7 +51,9 @@ class ArticleJpaServiceTest {
 
     @Test
     void save() {
-        articleService.save(Article.builder().id(6L).build());
+        Article article2 = new Article();
+        article2.setId(6L);
+        articleService.save(article2);
         verify(articleRepository, times(1)).save(any(Article.class));
     }
 

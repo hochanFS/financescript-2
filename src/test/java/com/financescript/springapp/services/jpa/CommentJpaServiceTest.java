@@ -28,14 +28,17 @@ class CommentJpaServiceTest {
         MockitoAnnotations.initMocks(this);
         List<Comment>comments = new ArrayList<>();
         commentService = new CommentJpaService(commentRepository);
-        comment1 = Comment.builder().id(COMMENT1_ID).build();
+        comment1 = new Comment();
+        comment1.setId(COMMENT1_ID);
         comments.add(comment1);
         when(commentRepository.findAll()).thenReturn(comments);
     }
 
     @Test
     void save() {
-        commentService.save(Comment.builder().id(2L).build());
+        Comment comment2 = new Comment();
+        comment2.setId(2L);
+        commentService.save(comment2);
         verify(commentRepository, times(1)).save(any(Comment.class));
     }
 

@@ -5,6 +5,8 @@ import com.financescript.springapp.repositories.SubCommentRepository;
 import com.financescript.springapp.services.SubCommentService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class SubCommentJpaService implements SubCommentService {
 
@@ -20,11 +22,13 @@ public class SubCommentJpaService implements SubCommentService {
     }
 
     @Override
+    @Transactional
     public void delete(SubComment object) {
         subCommentRepository.delete(object);
     }
 
     @Override
+    @Transactional
     public void save(SubComment object) {
         subCommentRepository.save(object);
     }

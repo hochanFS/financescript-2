@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,23 +18,20 @@ import java.util.List;
 public class Comment extends BaseEntity {
 
     @ManyToOne
-    private User author;
+    private User user;
 
     @ManyToOne
     private Article article;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
-    private List<SubComment> subComments = new ArrayList<>();
+    private Set<SubComment> subComments = new HashSet<>();
 
     @Lob
     private String contents;
 
-    @Builder
-    public Comment(Long id, User author, List<SubComment> subComments, String contents) {
-        super(id);
-        this.author = author;
-        if (subComments != null)
-            this.subComments = subComments;
-        this.contents = contents;
+    public Comment addSubComment(SubComment subComment) {
+        subComment.setComment(this);
+        this.subComments.add(subComment);
+        return this;
     }
 }

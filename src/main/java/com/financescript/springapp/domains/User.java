@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,29 +29,25 @@ public class User extends BaseEntity {
     private String password;
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Comment> comments = new HashSet<>();
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<SubComment> subComments = new HashSet<>();
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Article> articles = new ArrayList<>();
 
-    @Builder
-    public User(Long id, String email, String username, String password, Set<Comment> comments,
-                Set<SubComment> subComments, List<Article> articles) {
-        super(id);
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        if (comments != null)
-            this.comments = comments;
-        if (subComments != null)
-            this.subComments = subComments;
-        if (articles != null)
-            this.articles = articles;
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", comments=" + comments +
+                ", subComments=" + subComments +
+                ", articles=" + articles +
+                '}';
     }
 }
