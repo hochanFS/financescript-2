@@ -1,6 +1,5 @@
 package com.financescript.springapp.domains;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,7 @@ public class SubComment extends BaseEntity {
     private Comment comment;
 
     @ManyToOne
-    private User user;
+    private Member member;
 
     @Lob
     private String contents;

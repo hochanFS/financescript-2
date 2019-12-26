@@ -1,6 +1,5 @@
 package com.financescript.springapp.domains;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Email
     @Column(unique = true)
@@ -29,25 +28,15 @@ public class User extends BaseEntity {
     private String password;
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private Set<Comment> comments = new HashSet<>();
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private Set<SubComment> subComments = new HashSet<>();
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<Article> articles = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", comments=" + comments +
-                ", subComments=" + subComments +
-                ", articles=" + articles +
-                '}';
-    }
 }

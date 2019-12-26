@@ -9,7 +9,7 @@ This website intends to provide up-to-date, and statistics-based research for th
 ## Features to be developed
 * Provide simple quantitative tool for risk assessment and management; primarily contains remastered public Economic Scenario Generator, and documentation for its use
 * Stock index predictions based on news and sentiment by using Natural Language Processing. 
-* Equity Research platform, where the users can write, read, like and comment.
+* Equity Research platform, where the members can write, read, like and comment.
 * Long-term project: integrate Economic Scenario Generator and machine learning with traditional approach of Equity Research; some convenience tools may be provided
 
 ## Tools to be used for this project

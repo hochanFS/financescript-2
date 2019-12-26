@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,14 +14,14 @@ import java.util.Set;
 @NoArgsConstructor
 public class Article extends BaseEntity {
     @ManyToOne
-    private User user;
+    private Member member;
 
     private String title;
 
     @Lob
     private String contents;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private Set<Comment> comments = new HashSet<>();
 
     public Article addComment(Comment comment){

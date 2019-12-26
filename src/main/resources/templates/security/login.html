@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/info_fg :: metainfo ('FinanceScript 2.0')">Meta info goes here
+</head>
+<body>
+<h1>Login page</h1>
+<!-- p th:if="${loginError}" class="error">Wrong user or password</p -->
+<!--/*@thymesVar id="member" type="com.financescript.springapp.dto.MemberDto"*/-->
+<form th:object="member" th:action="@{/login.html}" method="post">
+    <label for="username">Username</label>:
+    <input th:field="*{member.username}" type="text" id="username" name="username" autofocus="autofocus" /> <br />
+    <label for="password">Password</label>:
+    <input type="password" id="password" name="password" /> <br />
+    <input type="submit" value="Log in" />
+</form>
+</body>
+</html>
