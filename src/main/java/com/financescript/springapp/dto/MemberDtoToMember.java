@@ -1,6 +1,7 @@
 package com.financescript.springapp.dto;
 
 import com.financescript.springapp.domains.Member;
+import com.financescript.springapp.domains.Role;
 import com.sun.istack.Nullable;
 import lombok.Synchronized;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,9 @@ public class MemberDtoToMember implements Converter<MemberDto, Member> {
         member.setSubComments(source.getSubComments());
         member.setPassword(source.getPassword());
         member.setEmail(source.getEmail());
+        if (member.getRoles().size() == 0) {
+            member.addRole(new Role("MEMBER"));
+        }
         return member;
     }
 }

@@ -1,6 +1,7 @@
 package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Member;
+import com.financescript.springapp.domains.Role;
 import com.financescript.springapp.dto.MemberDto;
 import com.financescript.springapp.dto.MemberDtoToMember;
 import com.financescript.springapp.dto.MemberToMemberDto;
@@ -10,10 +11,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -71,5 +75,23 @@ class MemberJpaServiceTest {
         when(memberDtoToMember.convert(any(MemberDto.class))).thenReturn(member1);
         memberService.save(memberDto);
         verify(memberRepository, times(1)).save(any(Member.class));
+    }
+
+    @Test
+    void loadUserByUserNameNull() {
+        when(memberRepository.findByUsername(anyString())).thenReturn(null);
+        assertThrows(UsernameNotFoundException.class, () -> memberService.loadUserByUsername("user1"));
+    }
+
+    @Test
+    void loadUserByUserNameNotNull() {
+        Member member = new Member();
+        member.addRole(new Role("MEMBER"));
+        member.setUsername("member1");
+        member.setPassword("temporalPassword1");
+        member.setId(1L);
+        when(memberRepository.findByUsername(anyString())).thenReturn(member);
+        assertNotNull(memberService.loadUserByUsername("user1"));
+        verify(memberRepository, times(1)).findByUsername(anyString());
     }
 }

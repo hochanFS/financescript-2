@@ -3,7 +3,6 @@ package com.financescript.springapp.services.jpa;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,7 +12,6 @@ import java.util.*;
 public class ArticleJpaService implements ArticleService {
 
     private final ArticleRepository articleRepository;
-    // private BCryptPasswordEncoder passwordEncoder;
 
     public ArticleJpaService(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;

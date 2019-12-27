@@ -6,10 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -40,10 +37,20 @@ public class Member extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<Article> articles = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
     public Member addArticle(Article article){
         article.setMember(this);
         this.articles.add(article);
         return this;
     }
 
+    public Member addRole(Role role) {
+        this.roles.add(role);
+        return this;
+    }
 }
