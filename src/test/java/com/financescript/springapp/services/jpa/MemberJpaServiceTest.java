@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -93,5 +94,14 @@ class MemberJpaServiceTest {
         when(memberRepository.findByUsername(anyString())).thenReturn(member);
         assertNotNull(memberService.loadUserByUsername("user1"));
         verify(memberRepository, times(1)).findByUsername(anyString());
+    }
+
+    @Test
+    void findAllTest() {
+        List<Member> members = new ArrayList<>();
+        members.add(new Member());
+        when(memberRepository.findAll()).thenReturn(members);
+        memberService.findAll();
+        verify(memberRepository, times(1)).findAll();
     }
 }
