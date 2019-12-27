@@ -15,6 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "user")
 public class Member extends BaseEntity {
 
     @Email
@@ -38,5 +39,11 @@ public class Member extends BaseEntity {
     @Column
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<Article> articles = new ArrayList<>();
+
+    public Member addArticle(Article article){
+        article.setMember(this);
+        this.articles.add(article);
+        return this;
+    }
 
 }
