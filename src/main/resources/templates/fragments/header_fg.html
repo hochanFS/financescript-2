@@ -5,12 +5,10 @@
     <h1><a id="logo" href="#">
         <img src="../static/img/Logo.png" th:src="@{/img/Logo.png}" alt="FinanceScript" width="100" height="89"/>
     </a></h1>
-    <div id="twitter">
-        <a href="https://twitter.com/FinanceScript" target="_blank"> <img src="../static/img/TwitterLogo.png" th:src="@{/img/TwitterLogo.png}" alt="" width="32" height="30"/></a>
-    </div>
-    <div id="linkedin">
-        <a href="https://www.linkedin.com/company/financescript-com?trk=company_logo" target="_blank"> <img src="../static/img/LIlogo.png" th:src="@{/img/LIlogo.png}" alt="" width="30" height="30"  /></a>
-    </div>
+    <h2>
+        <a th:href="@{/login}" role="button" aria-pressed="true">Sign in</a>
+    </h2>
+
 </div>
 <nav th:fragment="navigation">
     <div class="hamburger">

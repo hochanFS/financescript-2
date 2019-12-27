@@ -28,7 +28,8 @@ public class DevelopmentSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .and().authorizeRequests().antMatchers("/h2-console**").permitAll()
                 .and().authorizeRequests().antMatchers("/register").permitAll()
-                .and().authorizeRequests().antMatchers("/login").permitAll();
+                .and().authorizeRequests().antMatchers("/login").permitAll()
+                .and().formLogin().loginPage("/login").loginProcessingUrl("/authenticateTheUser").permitAll();
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
     }

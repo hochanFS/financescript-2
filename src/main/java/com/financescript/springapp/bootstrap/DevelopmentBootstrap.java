@@ -49,10 +49,14 @@ public class DevelopmentBootstrap implements ApplicationListener<ContextRefreshe
         Member member3 = new Member();
         member1.setUsername("user1");
         member1.setEmail("user1@financescript.com");
+        // password = test123; the below password is encrypted password
+        member1.setPassword("$2y$12$HSxqPxNnnll0FlOILa2PNu8Hg16JZrpniaNwmm93C63e35NKjrLSy");
         member2.setUsername("user2");
         member2.setEmail("user2@financescript.com");
+        member2.setPassword("$2y$12$HSxqPxNnnll0FlOILa2PNu8Hg16JZrpniaNwmm93C63e35NKjrLSy");
         member3.setUsername("user3");
         member3.setEmail("user3@financescript.com");
+        member3.setPassword("$2y$12$HSxqPxNnnll0FlOILa2PNu8Hg16JZrpniaNwmm93C63e35NKjrLSy");
 
         Article article1 = new Article();
         article1.setTitle("GOOG is on the way to 2000");

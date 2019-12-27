@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-
+<body th:fragment="footer">
+    <div id="twitter">
+        <a href="https://twitter.com/FinanceScript" target="_blank"> <img src="../static/img/TwitterLogo.png" th:src="@{/img/TwitterLogo.png}" alt="" width="32" height="30"/></a>
+    </div>
+    <div id="linkedin">
+        <a href="https://www.linkedin.com/company/financescript-com?trk=company_logo" target="_blank"> <img src="../static/img/LIlogo.png" th:src="@{/img/LIlogo.png}" alt="" width="30" height="30"  /></a>
+    </div>
 </body>
 </html>

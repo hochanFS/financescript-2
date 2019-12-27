@@ -15,14 +15,13 @@ import java.util.*;
 @Table(name = "user")
 public class Member extends BaseEntity {
 
-    @Email
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
+    @Column(name="username", unique = true)
     private String username;
 
-    @Column
+    @Column(name="password")
     private String password;
 
     @Column
@@ -37,7 +36,7 @@ public class Member extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
     private List<Article> articles = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
