@@ -4,11 +4,17 @@ import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.domains.Role;
 import com.sun.istack.Nullable;
 import lombok.Synchronized;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.core.convert.converter.Converter;
 
 @Component
 public class MemberDtoToMember implements Converter<MemberDto, Member> {
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public MemberDtoToMember() {
+    }
 
     @Synchronized
     @Nullable
@@ -23,7 +29,7 @@ public class MemberDtoToMember implements Converter<MemberDto, Member> {
         member.setArticles(source.getArticles());
         member.setComments(source.getComments());
         member.setSubComments(source.getSubComments());
-        member.setPassword(source.getPassword());
+        member.setPassword(passwordEncoder.encode(source.getPassword())); // encrypt the password before saving
         member.setEmail(source.getEmail());
         if (member.getRoles().size() == 0) {
             member.addRole(new Role("MEMBER"));

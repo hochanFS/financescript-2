@@ -3,6 +3,8 @@ package com.financescript.springapp.dto;
 import com.financescript.springapp.domains.Member;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +14,7 @@ class MemberDtoToMemberTest {
     public static final String EMAIL = "test1@financescript.com";
 
     MemberDtoToMember converter;
+
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -25,7 +28,7 @@ class MemberDtoToMemberTest {
         memberDto.setPassword(PASSWORD);
         memberDto.setEmail(EMAIL);
         Member member = converter.convert(memberDto);
-        assertEquals(PASSWORD, member.getPassword());
+        assertNotEquals(PASSWORD, member.getPassword()); // check if the password is encrypted
         assertEquals(USER_NAME, member.getUsername());
         assertEquals(EMAIL, member.getEmail());
         assertNotNull(member.getArticles());
