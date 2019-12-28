@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberDtoToMemberTest {
     public static final String USER_NAME = "test_user1";
     public static final String PASSWORD = "test_pass1";
-    public static final String EMAIL = "test1@financescript.com";
+    public static final String EMAIL = "tEst1@financescript.com";
 
     MemberDtoToMember converter;
 
@@ -36,8 +36,8 @@ class MemberDtoToMemberTest {
         memberDto.setEmail(EMAIL);
         Member member = converter.convert(memberDto);
         assertNotEquals(PASSWORD, member.getPassword()); // check if the password is encrypted
-        assertEquals(USER_NAME, member.getUsername());
-        assertEquals(EMAIL, member.getEmail());
+        assertEquals("TEST_USER1", member.getUsername());
+        assertEquals("test1@financescript.com", member.getEmail());
         assertNotNull(member.getArticles());
         assertNotNull(member.getSubComments());
         assertNotNull(member.getComments());

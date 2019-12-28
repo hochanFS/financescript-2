@@ -10,7 +10,7 @@ class MemberToMemberDtoTest {
 
     public static final String USER_NAME = "test_user1";
     public static final String PASSWORD = "test_pass1";
-    public static final String EMAIL = "test1@financescript.com";
+    public static final String EMAIL = "Test1@financescript.com";
 
     MemberToMemberDto converter;
 
@@ -26,8 +26,8 @@ class MemberToMemberDtoTest {
         member.setPassword(PASSWORD);
         member.setEmail(EMAIL);
         MemberDto memberDto = converter.convert(member);
-        assertEquals(USER_NAME, memberDto.getUsername());
-        assertEquals(EMAIL, memberDto.getEmail());
+        assertEquals("TEST_USER1", memberDto.getUsername());
+        assertEquals("test1@financescript.com", memberDto.getEmail());
         assertNotNull(memberDto.getArticles());
         assertNotNull(memberDto.getSubComments());
         assertNotNull(memberDto.getComments());
