@@ -1,9 +1,12 @@
 package com.financescript.springapp.dto;
 
 import com.financescript.springapp.domains.Member;
+import com.financescript.springapp.domains.Role;
+import com.financescript.springapp.services.RoleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,10 +18,14 @@ class MemberDtoToMemberTest {
 
     MemberDtoToMember converter;
 
+    @Mock
+    RoleService roleService;
+
 
     @BeforeEach
     public void setUp() throws Exception {
-        converter = new MemberDtoToMember();
+        MockitoAnnotations.initMocks(this);
+        converter = new MemberDtoToMember(roleService);
     }
 
     @Test

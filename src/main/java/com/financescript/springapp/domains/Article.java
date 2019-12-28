@@ -27,7 +27,6 @@ public class Article extends BaseEntity {
     public Article addComment(Comment comment){
         comment.setArticle(this);
         this.comments.add(comment);
-        comment.getMember().getComments().add(comment);
         return this;
     }
 

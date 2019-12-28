@@ -29,7 +29,6 @@ public class Comment extends BaseEntity {
     public Comment addSubComment(SubComment subComment) {
         subComment.setComment(this);
         this.subComments.add(subComment);
-        subComment.getMember().getSubComments().add(subComment);
         return this;
     }
 }
