@@ -3,6 +3,7 @@ package com.financescript.springapp.dto;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.Comment;
 import com.financescript.springapp.domains.SubComment;
+import com.financescript.springapp.validation.FieldMatch;
 import com.financescript.springapp.validation.ValidEmail;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,9 @@ import java.util.Set;
 
 @Getter
 @NoArgsConstructor
+@FieldMatch.List({
+        @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
+})
 public class MemberDto {
     //TODO: Add validations
     private Long id;
