@@ -7,10 +7,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import javax.validation.ConstraintValidatorContext;
-import java.util.Arrays;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,18 +50,15 @@ class FieldMatchValidatorTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        // when
         validator = new FieldMatchValidator();
         when(constraintValidatorContext.buildConstraintViolationWithTemplate(anyString()))
                 .thenReturn(builder);
         when(builder.addPropertyNode(anyString())).thenReturn(nodeContext);
         when(nodeContext.addConstraintViolation()).thenReturn(constraintValidatorContext);
-
-        // when
         when(constraintAnnotation.first()).thenReturn(FIRST);
         when(constraintAnnotation.second()).thenReturn(SECOND);
         when(constraintAnnotation.message()).thenReturn(MESSAGE);
-
-        // then & return
         validator.initialize(constraintAnnotation);
     }
 

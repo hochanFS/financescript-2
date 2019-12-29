@@ -104,4 +104,18 @@ class MemberJpaServiceTest {
         memberService.findAll();
         verify(memberRepository, times(1)).findAll();
     }
+
+    @Test
+    public void findByUsername() {
+        when(memberRepository.findByUsername(anyString())).thenReturn(member1);
+        memberService.findByUsername("member1");
+        verify(memberRepository, times(1)).findByUsername("MEMBER1");
+    }
+
+    @Test
+    public void findByEmail() {
+        when(memberRepository.findByEmail(anyString())).thenReturn(member1);
+        memberService.findByEmail("Test1@financescript.com");
+        verify(memberRepository, times(1)).findByEmail("test1@financescript.com");
+    }
 }

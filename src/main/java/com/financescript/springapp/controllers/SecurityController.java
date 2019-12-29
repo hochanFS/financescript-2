@@ -1,5 +1,6 @@
 package com.financescript.springapp.controllers;
 
+import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.dto.MemberDto;
 import com.financescript.springapp.services.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -42,9 +43,23 @@ public class SecurityController {
 
     @PostMapping(value="/register")
     public String processSignUpForm(@Valid @ModelAttribute("member") MemberDto memberDto, BindingResult bindingResult, Model model) {
+        String username = memberDto.getUsername();
+        log.info("Processing sign-up form for: " + username);
+
         if (bindingResult.hasErrors()) {
             return SIGN_UP_PAGE;
         }
+        Member memberMatchedByUsername = memberService.findByUsername(memberDto.getUsername());
+        if (memberMatchedByUsername != null) {
+            model.addAttribute("signUpError", "The username already exists.");
+            return SIGN_UP_PAGE;
+        }
+        Member memberMatchedByEmail = memberService.findByEmail(memberDto.getEmail());
+        if (memberMatchedByEmail != null) {
+            model.addAttribute("signUpError", "The email is already registered.");
+            return SIGN_UP_PAGE;
+        }
+
         memberService.save(memberDto);
         return HOME_PAGE;
     }

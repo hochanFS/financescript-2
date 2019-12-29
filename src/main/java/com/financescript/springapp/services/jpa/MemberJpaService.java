@@ -81,4 +81,17 @@ public class MemberJpaService implements MemberService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
+    @Override
+    public Member findByUsername(String username) {
+        username = username.toUpperCase();
+        return memberRepository.findByUsername(username);
+    }
+
+    @Override
+    public Member findByEmail(String email) {
+        String[] divided = email.split("@");
+        email = divided[0].toLowerCase() + "@" + divided[1];
+        return memberRepository.findByEmail(email);
+    }
 }
