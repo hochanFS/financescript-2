@@ -4,8 +4,7 @@
 </head>
 <body>
 <main>
-
-    <h1 th:text="article.title">Title</h1>
+    <form th:object="${article}" th:action="@{/article/create}" method="post">
 </main>
 </body>
 </html>
