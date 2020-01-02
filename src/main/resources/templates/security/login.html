@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script>
+    function upperCaseF(a){
+        setTimeout(function(){
+            a.value = a.value.toUpperCase();
+        }, 1);
+    }
+</script>
 <head th:replace="fragments/info_fg :: metainfo ('Login')">Meta info goes here
 </head>
 <body>
@@ -31,6 +38,7 @@
                name="username"
                class="form-control"
                autofocus="autofocus"
+               onkeydown="upperCaseF(this)"
                placeholder="Username">
     </div>
     <div class="form-group">

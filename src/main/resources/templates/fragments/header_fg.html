@@ -5,9 +5,17 @@
     <h1><a id="logo" href="#">
         <img src="../static/img/Logo.png" th:src="@{/img/Logo.png}" alt="FinanceScript" width="100" height="89"/>
     </a></h1>
+    <!--/*@thymesVar id="username" type="java.lang.String"*/-->
     <h2>
-        <a th:href="@{/login}" role="button" aria-pressed="true">Sign in</a>
+        <a th:if="${username == null}" th:href="@{/login}" role="button" aria-pressed="true">Sign in</a>
+        <div th:unless="${username == null}">
+            <span>Hi, <span th:text="${username}"></span></span>
+            <form action="/logout" method="POST">
+                <input type="submit" value="Logout" />
+            </form>
+        </div>
     </h2>
+
 
 </div>
 <nav th:fragment="navigation">
