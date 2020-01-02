@@ -91,6 +91,9 @@ public class MemberJpaService implements MemberService {
     @Override
     public Member findByEmail(String email) {
         String[] divided = email.split("@");
+        if (divided.length != 2) {
+            return null;
+        }
         email = divided[0].toLowerCase() + "@" + divided[1];
         return memberRepository.findByEmail(email);
     }

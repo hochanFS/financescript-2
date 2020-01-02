@@ -66,6 +66,6 @@ public class SecurityController {
 
     @RequestMapping(value = "/login")
     public String signInForm() {
-        return "security/login";
+        return SIGN_IN_PAGE;
     }
 }

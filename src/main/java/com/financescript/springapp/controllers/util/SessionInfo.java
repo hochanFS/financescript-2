@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 /**
  * This class intends to assist comparing the user in current session
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 
 @NoArgsConstructor
+@Component
 public class SessionInfo {
 
     public static String retrieveUsername() {

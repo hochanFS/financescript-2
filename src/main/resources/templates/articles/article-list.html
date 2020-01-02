@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--Temporary research page. To be replaced by a fancier style-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/info_fg :: metainfo ('FS::Researches')">Meta info goes here
+</head>
+
+<body>
+    <!--/*@thymesVar id="article" type="com.financescript.springapp.domains.Article"*/-->
+    <div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Author</th>
+                <th>Title</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tr th:remove="all">
+                <td>hochanlee</td>
+                <td><a href="#"> YELP: Undervalued Tech</a></td>
+                <td>10/30/2015</td>
+            </tr>
+            <tr th:each="article : ${articles}">
+                <td th:text="${article.member.username}">user1</td>
+                <td ><a href="#" th:text="${article.title}" th:href="@{'/article/' + ${article.id} + '/show'}">My article</a></td>
+                <td th:text="${converter.write(article.creationTime)}">01/01/2020 6:30</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

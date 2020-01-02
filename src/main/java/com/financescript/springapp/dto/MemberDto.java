@@ -66,7 +66,11 @@ public class MemberDto {
      */
     public void setEmail(String email) {
         String[] adjustedEmail = email.split("@");
-        this.email = adjustedEmail[0].toLowerCase() + "@" + adjustedEmail[1];
+        if (adjustedEmail.length == 2) {
+            this.email = adjustedEmail[0].toLowerCase() + "@" + adjustedEmail[1];
+        } else {
+            this.email = email;
+        }
     }
 
     public void setUsername(String username) {
