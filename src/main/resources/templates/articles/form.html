@@ -4,7 +4,25 @@
 </head>
 <body>
 <main>
-    <form th:object="${article}" th:action="@{/article/create}" method="post">
+    <form th:object="${article}" th:action="@{/articles/new}" method="post">
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+            <p>Failed to save the article:</p>
+        </div>
+        <div class="pannel-group">
+            <div class="row">
+                <label>Title</label>
+                <input type="text" class="form-control" th:field="*{title}" th:errorclass="has-error" />
+            </div>
+            <div class="option">
+
+            </div>
+            <div class="row">
+                <textarea style="width:60rem; height:60vh; white-space: pre-line;" class="large-input" th:field="*{contents}" th:errorclass="has-error">
+                </textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
 </main>
 </body>
 </html>

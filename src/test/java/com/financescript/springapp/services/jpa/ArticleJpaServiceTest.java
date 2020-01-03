@@ -1,6 +1,7 @@
 package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Article;
+import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,7 @@ class ArticleJpaServiceTest {
     void save() {
         Article article2 = new Article();
         article2.setId(6L);
+        article2.setMember(new Member());
         articleService.save(article2);
         verify(articleRepository, times(1)).save(any(Article.class));
     }

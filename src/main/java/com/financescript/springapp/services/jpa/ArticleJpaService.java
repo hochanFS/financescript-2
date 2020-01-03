@@ -3,6 +3,7 @@ package com.financescript.springapp.services.jpa;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,6 +32,7 @@ public class ArticleJpaService implements ArticleService {
     @Override
     @Transactional
     public Article save(Article article) {
+        article.getMember().addArticle(article);
         return articleRepository.save(article);
     }
 
@@ -41,6 +43,7 @@ public class ArticleJpaService implements ArticleService {
 
     @Override
     @Transactional
+    @PreAuthorize("#.member.username == authentication.principal.username")
     public void delete(Article article) {
         articleRepository.delete(article);
     }

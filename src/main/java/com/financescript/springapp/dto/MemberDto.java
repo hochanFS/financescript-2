@@ -38,6 +38,8 @@ public class MemberDto {
     @ValidEmail
     private String email;
 
+    @NotNull(message = "is required")
+    @Size(min=1, max=15, message="username should be between 1 and 15 characters long")
     private String username;
 
     @NotNull(message = "is required")
