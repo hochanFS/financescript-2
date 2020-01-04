@@ -75,4 +75,18 @@ public class ArticleController {
             model.addAttribute("sessionUser", principal.getName());
         return "articles/show"; // TODO: create a show template
     }
+
+    @GetMapping("/articles/{id}/update")
+    public String updateArticle(@PathVariable String id, Model model, Principal principal) {
+        Article article = articleService.findById(Long.valueOf(id));
+        if (article == null) {
+            return "redirect:/articles";
+        }
+        if (principal != null && principal.getName().equals(article.getMember().getUsername())) {
+            model.addAttribute("article", article);
+            return ARTICLE_FORM_URL;
+        }
+        return "redirect:/articles/" + id + "/show";
+    }
+
 }

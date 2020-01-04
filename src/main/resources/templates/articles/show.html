@@ -15,7 +15,7 @@
             </div>
             <div class="col-2-of-2">
                 <span th:text="${converter.write(article.creationTime)}">01/01/2020</span>
-                <span th:if="${sessionUser == article.member.username}"><a>Edit</a></span>
+                <span th:if="${sessionUser == article.member.username}"><a th:href="@{'/articles/' + ${article.id} + '/update'}">Edit</a></span>
                 <span th:if="${sessionUser == article.member.username}"><a>Delete</a></span>
             </div>
         </div>

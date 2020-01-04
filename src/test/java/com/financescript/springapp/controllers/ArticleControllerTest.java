@@ -203,6 +203,62 @@ class ArticleControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("sessionUser"))
-                .andExpect(view().name("articles/show")); // need to edit
+                .andExpect(view().name("articles/show"));
     }
+
+    @Test
+    void updateArticle_nullArticle() throws Exception {
+        // given
+        // when
+        when(articleService.findById(any())).thenReturn(null);
+
+        // then
+        mockMvc.perform(get("/articles/1/update"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles")); // consider throwing 404 error
+    }
+
+    @Test
+    void updateArticle_noPrincipal() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        article1.setMember(new Member());
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/1/update")
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(article1);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles/1/show")); // consider throwing 404 error
+    }
+
+    @Test
+    void updateArticle_author() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Member member = new Member();
+        member.setUsername("USER1");
+        article1.setMember(member);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/1/update")
+                .principal(mockPrincipal)
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(article1);
+        when(mockPrincipal.getName()).thenReturn("USER1");
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(view().name("articles/form")); // consider throwing 404 error
+    }
+
 }
