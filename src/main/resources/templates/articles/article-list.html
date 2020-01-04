@@ -24,7 +24,7 @@
             </tr>
             <tr th:each="article : ${articles}">
                 <td th:text="${article.member.username}">user1</td>
-                <td ><a href="#" th:text="${article.title}" th:href="@{'/article/' + ${article.id} + '/show'}">My article</a></td>
+                <td ><a href="#" th:text="${article.title}" th:href="@{'/articles/' + ${article.id} + '/show'}">My article</a></td>
                 <td th:text="${converter.write(article.creationTime)}">01/01/2020 6:30</td>
             </tr>
         </table>

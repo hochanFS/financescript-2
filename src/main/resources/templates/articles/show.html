@@ -3,9 +3,60 @@
 <head th:replace="fragments/info_fg :: metainfo ('FS::Articles')">Meta info goes here
 </head>
 <body>
+<!--/*@thymesVar id="article" type="com.financescript.springapp.domains.Article"*/-->
 <main>
+    <div class="article-viewer">
+        <div class="row center">
+            <h1 th:text="${article.title}">Title</h1>
+        </div>
+        <div class="row">
+            <div class="col-1-of-2">
+                <span th:text="${article.member.username}">Author</span>
+            </div>
+            <div class="col-2-of-2">
+                <span th:text="${converter.write(article.creationTime)}">01/01/2020</span>
+                <span th:if="${sessionUser == article.member.username}"><a>Edit</a></span>
+                <span th:if="${sessionUser == article.member.username}"><a>Delete</a></span>
+            </div>
+        </div>
+        <div class="row">
+            <br>
+            <span th:text="${article.contents}">TOKYO - Carlos Ghosn was aided in his escape from Japan by an American security consultant who accompanied him on the flight out of the country, a person familiar with the matter said, while a Turkish charter jet company said on Friday that its planes were used illegally to pull off the plan.
 
-    <h1 th:text="article.title">Title</h1>
+The Japanese news media also reported on Friday that surveillance camera footage showed the disgraced auto industry mogul leaving his Tokyo home by himself on Sunday, a day before he turned up in Beirut, Lebanon.
+
+With the new details, a clearer - if still imperfect - picture is emerging of how Mr. Ghosn, Japan’s most prominent criminal defendant, managed to evade authorities. The American consultant, a former United States Green Beret named Michael Taylor, was introduced to the disgraced auto executive by Lebanese intermediaries months ago, said the person, who asked not to be identified to discuss a sensitive issue.</span>
+        </div>
+    </div>
+    <div class="comments" th:each="comment: ${article.comments}">
+        <div class="comment-viewer">
+            <div class="row">
+                <div class="col-1-of-2">
+                    <span th:text="${comment.member.username}">Author</span>
+                </div>
+                <div class="col-2-of-2">
+                    <span th:text="${converter.write(comment.creationTime)}">01/01/2020</span>
+                </div>
+            </div>
+            <div class="comment-content">
+                <p th:text="${comment.contents}"></p>
+            </div>
+            <div th:each="subComment: ${comment.subComments}">
+                <div class="row">
+                    <div class="col-1-of-2">
+                        <span th:text="${subComment.member.username}">Author</span>
+                    </div>
+                    <div class="col-2-of-2">
+                        <span th:text="${converter.write(subComment.creationTime)}">01/01/2020</span>
+                    </div>
+                </div>
+                <div class="comment-content">
+                    <p th:text="${subComment.contents}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 </body>
 </html>

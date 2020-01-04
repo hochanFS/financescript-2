@@ -67,9 +67,12 @@ public class ArticleController {
         return "redirect:/articles/" + newArticle.getId() + "/show";
     }
 
-    @GetMapping("/article/{id}/show")
-    public String showArticle(@PathVariable String id, Model model) {
+    @GetMapping("/articles/{id}/show")
+    public String showArticle(@PathVariable String id, Model model, Principal principal) {
+        model.addAttribute("converter", localDateTimeWriter);
         model.addAttribute("article", articleService.findById(Long.valueOf(id)));
-        return ARTICLE_FORM_URL; // TODO: create a show template
+        if (principal != null)
+            model.addAttribute("sessionUser", principal.getName());
+        return "articles/show"; // TODO: create a show template
     }
 }

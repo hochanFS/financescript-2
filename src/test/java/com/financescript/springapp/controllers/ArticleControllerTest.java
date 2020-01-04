@@ -174,9 +174,12 @@ class ArticleControllerTest {
         article1.setId(1L);
         article1.setMember(new Member());
 
+        // when
+        when(articleService.findById(any())).thenReturn(article1);
+
         // then
-        mockMvc.perform(get("/article/1/show"))
+        mockMvc.perform(get("/articles/1/show"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("articles/form")); // need to edit
+                .andExpect(view().name("articles/show")); // need to edit
     }
 }
