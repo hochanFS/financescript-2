@@ -11,19 +11,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +24,6 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.StatusResultMatchers.*;
 
 class ArticleControllerTest {
 
@@ -259,6 +250,30 @@ class ArticleControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(view().name("articles/form")); // consider throwing 404 error
+    }
+
+    @Test
+    void updateArticle_unAuthorizedUser() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Member member = new Member();
+        member.setUsername("USER1");
+        article1.setMember(member);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/1/update")
+                .principal(mockPrincipal)
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(article1);
+        when(mockPrincipal.getName()).thenReturn("USER2"); // unauthorized user
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles/1/show"));
     }
 
 }
