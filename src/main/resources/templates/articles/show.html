@@ -14,9 +14,11 @@
                 <span th:text="${article.member.username}">Author</span>
             </div>
             <div class="col-2-of-2">
+                <!--/*@thymesVar id="sessionUsername" type="java.lang.String"*/-->
                 <span th:text="${converter.write(article.creationTime)}">01/01/2020</span>
-                <span th:if="${sessionUser == article.member.username}"><a th:href="@{'/articles/' + ${article.id} + '/update'}">Edit</a></span>
-                <span th:if="${sessionUser == article.member.username}"><a>Delete</a></span>
+                <span th:if="${sessionUsername == article.member.username}"><a th:href="@{'/articles/' + ${article.id} + '/update'}">Edit</a></span>
+                <span th:if="${sessionUsername == article.member.username}"><a href="#" th:href="@{'/articles/' + ${article.id} + '/delete'}">Delete</a></span>
+                <!--Add alert with CSS-->
             </div>
         </div>
         <div class="row">

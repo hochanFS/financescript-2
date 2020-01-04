@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true) //TODO: still needed?
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Profile("development")
 public class DevelopmentSecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberService memberService;

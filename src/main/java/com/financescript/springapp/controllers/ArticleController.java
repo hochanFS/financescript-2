@@ -68,11 +68,9 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{id}/show")
-    public String showArticle(@PathVariable String id, Model model, Principal principal) {
+    public String showArticle(@PathVariable String id, Model model) {
         model.addAttribute("converter", localDateTimeWriter);
         model.addAttribute("article", articleService.findById(Long.valueOf(id)));
-        if (principal != null)
-            model.addAttribute("sessionUser", principal.getName());
         return "articles/show"; // TODO: create a show template
     }
 
@@ -87,6 +85,16 @@ public class ArticleController {
             return ARTICLE_FORM_URL;
         }
         return "redirect:/articles/" + id + "/show";
+    }
+
+    @GetMapping("/articles/{id}/delete")
+    public String deleteArticle(@PathVariable String id, Principal principal) {
+        Article article = articleService.findById(Long.valueOf(id));
+        if (article == null) {
+            return "redirect:/articles";
+        }
+        articleService.secureDelete(article, article.getMember().getUsername(), principal);
+        return "redirect:/articles";
     }
 
 }

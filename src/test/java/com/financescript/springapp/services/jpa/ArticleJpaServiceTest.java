@@ -7,12 +7,15 @@ import com.financescript.springapp.services.ArticleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.Mockito.*;
-
 
 class ArticleJpaServiceTest {
 
@@ -60,14 +63,14 @@ class ArticleJpaServiceTest {
     }
 
     @Test
-    void deleteById() {
-        articleService.deleteById(ARTICLE_ID1);
-        verify(articleRepository, times(1)).deleteById(anyLong());
-    }
+    void delete_samePrincipal() {
+        // given
+        Principal mockPrincipal = Mockito.mock(Principal.class);
 
-    @Test
-    void delete() {
-        articleService.delete(article1);
+        //when
+        when(mockPrincipal.getName()).thenReturn("USER1");
+
+        articleService.secureDelete(article1, "USER1", mockPrincipal);
         verify(articleRepository, times(1)).delete(any(Article.class));
     }
 

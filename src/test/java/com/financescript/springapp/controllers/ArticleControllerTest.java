@@ -1,6 +1,7 @@
 package com.financescript.springapp.controllers;
 
 import com.financescript.springapp.domains.Article;
+import com.financescript.springapp.domains.Comment;
 import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
@@ -16,6 +17,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +141,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void saveOrUpdate_hasBindingError() throws Exception {
+    void saveOrUpdate_hasBindingError() {
         // given
         BindingResult mockBindingResult = Mockito.mock(BindingResult.class);
 
@@ -146,10 +150,6 @@ class ArticleControllerTest {
         article1.setMember(new Member());
         Principal mockPrincipal = Mockito.mock(Principal.class);
         Model model = Mockito.mock(Model.class);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post("/articles/new")
-                .principal(mockPrincipal)
-                .requestAttr("article", article1);
 
         // when
         Mockito.when(mockBindingResult.hasErrors()).thenReturn(true);
@@ -159,41 +159,21 @@ class ArticleControllerTest {
     }
 
     @Test
-    void showArticle_noPrincipal() throws Exception {
+    void showArticle() throws Exception {
         // given
         Article article1 = new Article();
         article1.setId(1L);
         article1.setMember(new Member());
-
-        // when
-        when(articleService.findById(any())).thenReturn(article1);
-
-        // then
-        mockMvc.perform(get("/articles/1/show"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("articles/show")); // need to edit
-    }
-
-    @Test
-    void showArticle_existingPrincipal() throws Exception {
-        // given
-        Article article1 = new Article();
-        article1.setId(1L);
-        article1.setMember(new Member());
-        Principal mockPrincipal = Mockito.mock(Principal.class);
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/articles/1/show")
-                .principal(mockPrincipal)
                 .requestAttr("article", article1);
 
         // when
         when(articleService.findById(any())).thenReturn(article1);
-        when(mockPrincipal.getName()).thenReturn("USER1");
 
         // then
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("sessionUser"))
                 .andExpect(view().name("articles/show"));
     }
 
@@ -274,6 +254,53 @@ class ArticleControllerTest {
         mockMvc.perform(requestBuilder)
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/1/show"));
+    }
+
+    @Test
+    void deleteArticle_existingArticle() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Member member = new Member();
+        member.setUsername("USER1");
+        article1.setMember(member);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/1/delete")
+                .principal(mockPrincipal)
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(article1);
+        when(mockPrincipal.getName()).thenReturn("USER1"); // authorized user
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles"));
+        verify(articleService, times(1)).secureDelete(any(Article.class), anyString(), any(Principal.class));
+    }
+
+    @Test
+    void deleteArticle_unavailableArticle() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/2/delete")
+                .principal(mockPrincipal)
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(null);
+        when(mockPrincipal.getName()).thenReturn("USER1"); // authorized user
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles"));
+        verify(articleService, times(0)).secureDelete(any(Article.class), anyString(), any(Principal.class));
     }
 
 }

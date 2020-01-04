@@ -10,13 +10,8 @@ import java.security.Principal;
 public class IndexController {
 
     @GetMapping({"", "/", "/index", "/index.html"})
-    public String index(Principal principal, Model model)
+    public String index()
     {
-        if (principal == null) {
-            model.addAttribute("username", null);
-        } else {
-            model.addAttribute("username", principal.getName());
-        }
         return "index";
     }
 }

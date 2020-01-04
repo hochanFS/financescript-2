@@ -4,9 +4,11 @@ import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.*;
 
 @Service
@@ -37,14 +39,9 @@ public class ArticleJpaService implements ArticleService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        articleRepository.deleteById(id);
-    }
-
-    @Override
     @Transactional
-    @PreAuthorize("#.member.username == authentication.principal.username")
-    public void delete(Article article) {
+    @PreAuthorize("#principal != null and (hasRole('ROLE_ADMIN') or #authorName.equals(#principal.name))")
+    public void secureDelete(Article article, String authorName, Principal principal) {
         articleRepository.delete(article);
     }
 
