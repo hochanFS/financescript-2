@@ -168,7 +168,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void showArticle() throws Exception {
+    void showArticle_noPrincipal() throws Exception {
         // given
         Article article1 = new Article();
         article1.setId(1L);
@@ -180,6 +180,29 @@ class ArticleControllerTest {
         // then
         mockMvc.perform(get("/articles/1/show"))
                 .andExpect(status().isOk())
+                .andExpect(view().name("articles/show")); // need to edit
+    }
+
+    @Test
+    void showArticle_existingPrincipal() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        article1.setMember(new Member());
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/1/show")
+                .principal(mockPrincipal)
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(article1);
+        when(mockPrincipal.getName()).thenReturn("USER1");
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("sessionUser"))
                 .andExpect(view().name("articles/show")); // need to edit
     }
 }
