@@ -7,6 +7,7 @@
 <body>
     <!--/*@thymesVar id="article" type="com.financescript.springapp.domains.Article"*/-->
     <div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
+    <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
 
     <div>
         <table>
@@ -24,10 +25,12 @@
             </tr>
             <tr th:each="article : ${articles}">
                 <td th:text="${article.member.username}">user1</td>
-                <td ><a href="#" th:text="${article.title}" th:href="@{'/articles/' + ${article.id} + '/show'}">My article</a></td>
+                <td ><a th:text="${article.title}" th:href="@{'/articles/' + ${article.id} + '/show'}">My article</a></td>
                 <td th:text="${converter.write(article.creationTime)}">01/01/2020 6:30</td>
             </tr>
+
         </table>
+        <p><a th:href="@{/articles/new}">New</a></p>
     </div>
 </body>
 </html>
