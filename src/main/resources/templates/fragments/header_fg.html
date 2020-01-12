@@ -1,36 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<body>
-<div id="header" th:fragment="social_media">
-    <h1><a id="logo" href="#">
-        <img src="../static/img/Logo.png" th:src="@{/img/Logo.png}" alt="FinanceScript" width="100" height="89"/>
-    </a></h1>
-    <!--/*@thymesVar id="sessionUsername" type="java.lang.String"*/-->
-    <h2>
-        <a th:if="${sessionUsername == null}" th:href="@{/login}" role="button" aria-pressed="true">Sign in</a>
-        <div th:unless="${sessionUsername == null}">
-            <span>Hi, <span th:text="${sessionUsername}"></span></span>
-            <form action="/logout" method="POST">
-                <input type="submit" value="Logout" />
-            </form>
+<body class="main--body">
+<!-- <div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
+<div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div> -->
+<div th:fragment="social_media" class="main--header">
+    <div class="dynamic--margin">
+        <a href="#" th:href="@{/}" class="u-float-left logo">
+            <img src="img/Logo.png" th:src="@{/img/Logo.png}" alt="FinanceScript" class="logo--img"/>
+        </a>
+        <!--/*@thymesVar id="sessionUsername" type="java.lang.String"*/-->
+        <div class="u-float-right dynamic--pading__right u-margin-neg-top-small-px">
+            <div th:if="${sessionUsername == null}" class="u-margin-top-huge-px">
+                <a th:href="@{/login}" role="button" aria-pressed="true" class="btn btn--green u-padding-small-btn">Log in</a>
+            </div>
+            <div th:unless="${sessionUsername == null}">
+               <div class="greeting">Hi, <span th:text="${sessionUsername}">***</span></div>
+                <form action="/logout" method="POST" class="u-margin-top-small">
+                    <input type="submit" value="Logout" class="btn btn--orange"/>
+                </form>
+            </div>
         </div>
-    </h2>
-
-
-</div>
-<nav th:fragment="navigation">
-    <div class="hamburger">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
     </div>
-    <ul class="nav-links">
-        <li class = "nav-list"><a href="#" class="nav-choice">About</a></li>
-        <li class = "nav-list"><a href="#" class="nav-choice">Simulations</a></li>
-        <li class = "nav-list"><a href="#" class="nav-choice">Machine Learning</a></li>
-        <li class = "nav-list"><a href="#" class="nav-choice">Equity Research</a></li>
-        <li class = "nav-list"><a href="#" class="nav-choice">Contact Us</a></li>
-    </ul>
-</nav>
+</div>
+<section th:fragment="navigation" >
+    <nav class="navigation">
+        <div class="responsive__margin">
+            <div class="navigation__wrapper">
+                <ul class="navigation__list">
+                    <li class = "navigation__item"><a href="#" class="navigation__link navigation__link--orange">About Us</a></li>
+                    <li class = "navigation__item"><a href="#" class="navigation__link navigation__link--orange">Simulations</a></li>
+                    <li class = "navigation__item"><a href="#" class="navigation__link navigation__link--orange">Machine Learning</a></li>
+                    <li class = "navigation__item"><a href="#" th:href="@{/articles}" class="navigation__link navigation__link--orange">Equity Research</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="phone-nav">
+        <input type = "checkbox" class="phone-nav__checkbox" id="navi-toggle">
+        <label for = "navi-toggle" class="phone-nav__button">
+            <span class="phone-nav__icon">&nbsp;</span>
+        </label>
+        <div class="phone-nav__background">&nbsp;</div>
+        <div class="phone-nav__nav">
+            <ul class="phone-nav__list">
+                <li class = "phone_nav__item"><a href="#" class="phone-nav__link phone-nav__link--orange">About Us</a></li>
+                <li class = "phone_nav__item"><a href="#" class="phone-nav__link phone-nav__link--orange">Simulations</a></li>
+                <li class = "phone_nav__item"><a href="#" class="phone-nav__link phone-nav__link--orange">Machine Learning</a></li>
+                <li class = "phone_nav__item"><a href="#" th:href="@{/articles}" class="phone-nav__link phone-nav__link--orange">Equity Research</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- footer thymeleaf -->
+<div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
+<!-- -->
 </body>
 </html>
