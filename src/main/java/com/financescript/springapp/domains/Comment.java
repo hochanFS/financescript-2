@@ -20,7 +20,7 @@ public class Comment extends BaseEntity {
     @ManyToOne
     private Article article;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comment")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "comment")
     private Set<SubComment> subComments = new HashSet<>();
 
     @Lob

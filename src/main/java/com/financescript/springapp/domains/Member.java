@@ -26,18 +26,18 @@ public class Member extends BaseEntity {
     private String password;
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "member")
     private Set<Comment> comments = new HashSet<>();
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "member")
     private Set<SubComment> subComments = new HashSet<>();
 
     @Column
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "member")
     private List<Article> articles = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

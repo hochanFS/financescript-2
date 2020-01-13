@@ -8,6 +8,7 @@
 <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
 <main>
     <form th:object="${article}" th:action="@{/articles/new}" method="post">
+        <input type="hidden" th:field="*{id}"/>
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
             <p>Failed to save the article:</p>
         </div>

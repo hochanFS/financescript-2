@@ -23,7 +23,7 @@ public class Article extends BaseEntity {
     @Lob
     private String contents;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "article")
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "article")
     private Set<Comment> comments = new HashSet<>();
 
     public Article addComment(Comment comment){

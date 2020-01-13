@@ -124,5 +124,16 @@ public class DevelopmentBootstrap implements ApplicationListener<ContextRefreshe
         comment3.addSubComment(subComment3);
         log.info("FinanceScript::DevelopmentBootstrap >> Adding the sub-comments");
 
+        subCommentService.save(subComment1);
+        subCommentService.save(subComment2);
+        subCommentService.save(subComment3);
+
+        commentService.save(comment1);
+        commentService.save(comment2);
+        commentService.save(comment3);
+
+        articleService.save(article1);
+        articleService.save(article2);
+        articleService.save(article3);
     }
 }
