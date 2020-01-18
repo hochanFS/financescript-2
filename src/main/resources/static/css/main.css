@@ -772,4 +772,5 @@ table th {
         float: none;
         display: block !important;
         height: 3.5rem !important;
-        text-align: center; } }
+        text-align: center;
+        margin-top: 1rem; } }
