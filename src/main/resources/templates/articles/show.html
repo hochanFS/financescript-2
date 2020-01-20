@@ -7,7 +7,7 @@
 <div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
 <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
 <!--/*@thymesVar id="article" type="com.financescript.springapp.domains.Article"*/-->
-<main>
+<main class="mainsection">
     <div class="article-viewer">
         <div class="row center">
             <h1 th:text="${article.title}">Title</h1>
@@ -26,11 +26,19 @@
         </div>
         <div class="row">
             <br>
-            <span th:text="${article.contents}">TOKYO - Carlos Ghosn was aided in his escape from Japan by an American security consultant who accompanied him on the flight out of the country, a person familiar with the matter said, while a Turkish charter jet company said on Friday that its planes were used illegally to pull off the plan.
-
-The Japanese news media also reported on Friday that surveillance camera footage showed the disgraced auto industry mogul leaving his Tokyo home by himself on Sunday, a day before he turned up in Beirut, Lebanon.
-
-With the new details, a clearer - if still imperfect - picture is emerging of how Mr. Ghosn, Japan’s most prominent criminal defendant, managed to evade authorities. The American consultant, a former United States Green Beret named Michael Taylor, was introduced to the disgraced auto executive by Lebanese intermediaries months ago, said the person, who asked not to be identified to discuss a sensitive issue.</span>
+            <article th:utext="${parser.parse(article.contents)}">
+                <pre><div class="editor_java">
+                    import java.util.ArrayList;
+                    public class ArticleParser {
+                    System.out.println("hello");}
+                </div></pre>
+                <p>this is <code>code snippet</code></p>
+                <pre><div class="editor_java">
+                    import java.util.ArrayList;
+                    public class ArticleParser {
+                    System.out.println("hello");}
+                </div></pre>
+            </article>
         </div>
     </div>
     <div class="comments" th:each="comment: ${article.comments}">

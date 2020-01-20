@@ -1,7 +1,7 @@
 package com.financescript.springapp.controllers;
 
+import com.financescript.springapp.dto.tools.ArticleParser;
 import com.financescript.springapp.domains.Article;
-import com.financescript.springapp.domains.Comment;
 import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -43,6 +41,9 @@ class ArticleControllerTest {
     @Mock
     Model model;
 
+    @Mock
+    ArticleParser articleParser;
+
     ArticleController controller;
 
     MockMvc mockMvc;
@@ -50,7 +51,7 @@ class ArticleControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        controller = new ArticleController(articleService, memberService, localDateTimeWriter);
+        controller = new ArticleController(articleService, memberService, localDateTimeWriter, articleParser);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
