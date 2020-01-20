@@ -1,9 +1,9 @@
 package com.financescript.springapp.controllers;
 
-import com.financescript.springapp.dto.tools.ArticleParser;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
+import com.financescript.springapp.dto.tools.ArticleConverter;
 import com.financescript.springapp.services.ArticleService;
 import com.financescript.springapp.services.MemberService;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ class ArticleControllerTest {
     Model model;
 
     @Mock
-    ArticleParser articleParser;
+    ArticleConverter articleConverter;
 
     ArticleController controller;
 
@@ -51,7 +51,7 @@ class ArticleControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        controller = new ArticleController(articleService, memberService, localDateTimeWriter, articleParser);
+        controller = new ArticleController(articleService, memberService, localDateTimeWriter, articleConverter);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 

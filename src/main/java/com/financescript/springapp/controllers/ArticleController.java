@@ -1,6 +1,6 @@
 package com.financescript.springapp.controllers;
 
-import com.financescript.springapp.dto.tools.ArticleParser;
+import com.financescript.springapp.dto.tools.ArticleConverter;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
@@ -24,14 +24,14 @@ public class ArticleController {
     private static final String ARTICLE_FORM_URL = "articles/form";
     private final ArticleService articleService;
     private final MemberService memberService;
-    private final ArticleParser articleParser;
+    private final ArticleConverter articleConverter;
     private LocalDateTimeWriter localDateTimeWriter;
 
-    public ArticleController(ArticleService articleService, MemberService memberService,LocalDateTimeWriter localDateTimeWriter, ArticleParser articleParser) {
+    public ArticleController(ArticleService articleService, MemberService memberService,LocalDateTimeWriter localDateTimeWriter, ArticleConverter articleParser) {
         this.articleService = articleService;
         this.memberService = memberService;
         this.localDateTimeWriter = localDateTimeWriter;
-        this.articleParser = articleParser;
+        this.articleConverter = articleParser;
     }
 
     @GetMapping("/articles")
@@ -74,7 +74,7 @@ public class ArticleController {
     public String showArticle(@PathVariable String id, Model model) {
         model.addAttribute("converter", localDateTimeWriter);
         model.addAttribute("article", articleService.findById(Long.valueOf(id)));
-        model.addAttribute("parser", articleParser);
+        model.addAttribute("parser", articleConverter);
         return "articles/show"; // TODO: create a show template
     }
 
