@@ -54,15 +54,21 @@ class ArticleControllerTest {
     @Test
     void showArticleList__nullArticle() {
         List<Article> articles = new ArrayList<>();
-        Article article = new Article();
-        article.setId(1L);
-        article.setMember(new Member());
-        article.setCreationDateTime();
-        articles.add(new Article());
 
         when(articleService.findAllByOrderByCreationTimeDesc()).thenReturn(articles);
 
         assertEquals("articles/article-list", controller.showArticleList(null, model));
+        verify(articleService, times(1)).findAllByOrderByCreationTimeDesc();
+    }
+
+    @Test
+    void showArticleList__articleWithUnknownTitle() {
+        List<Article> articles = new ArrayList<>();
+        Article article = new Article();
+
+        when(articleService.findAllByOrderByCreationTimeDesc()).thenReturn(articles);
+
+        assertEquals("articles/article-list", controller.showArticleList(article, model));
         verify(articleService, times(1)).findAllByOrderByCreationTimeDesc();
     }
 
