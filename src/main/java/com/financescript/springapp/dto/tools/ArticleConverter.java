@@ -13,6 +13,8 @@ import java.util.List;
 public class ArticleConverter {
 
     public String convert(String source) {
+        if (source == null)
+            return null;
         return sanitize(codeToDivIfLanguageSpecified(parse(source)));
     }
 

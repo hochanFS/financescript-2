@@ -67,19 +67,23 @@ public class DevelopmentBootstrap implements ApplicationListener<ContextRefreshe
         // add articles
         Article article1 = new Article();
         article1.setTitle("GOOG is on the way to 2000");
-        article1.setContents("Even ignoring the 'other bets', YouTube is poised to keep growing. "
-                + "Especially, when the 5G is introduced, we expect more people will spend even "
-                + "more time consuming the content.");
+        article1.setOriginalText("Even ignoring the 'other bets', YouTube is poised to keep growing. " +
+                "Especially, when the 5G is introduced, we expect more people will spend even " +
+                "more time consuming the content.\n\n" +
+                "```java\npublic class Main() {\n" +
+                "import java.util.ArrayList;\n" +
+                "System.out.println(\"Hi\")\n" +
+                "}\n```");
         Article article2 = new Article();
         article2.setTitle("M: high risk, high reward");
-        article2.setContents("Macy's has a great margin of safety due to its huge real estate. "
+        article2.setOriginalText("Macy's has a great margin of safety due to its huge real estate. "
                 + "Even with this MoS and Macy's positive earnings, M's stock price fell sharply year to date. "
                 + "The negative sentiment may keep the stock price lower, but in the end patient investors will get the returns."
                 + "Another thing to keep an eye on is how much growth Macy's shows in their online business.");
 
         Article article3 = new Article();
         article3.setTitle("PAAS: Silver Story");
-        article3.setContents("PAAS is one of the biggest Silver miners in the world. "
+        article3.setOriginalText("PAAS is one of the biggest Silver miners in the world. "
                 + "The mining cost has been dropping substantially, while the demand of Silver has grown thanks to "
                 + "increased need of industry need as well as historically correlated hedge against loose monetary "
                 + "policies.");

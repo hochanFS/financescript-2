@@ -2,6 +2,7 @@ package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.Member;
+import com.financescript.springapp.dto.tools.ArticleConverter;
 import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,9 @@ class ArticleJpaServiceTest {
     @Mock
     ArticleRepository articleRepository;
 
+    @Mock
+    ArticleConverter articleConverter;
+
     ArticleService articleService;
 
     private Article article1;
@@ -33,7 +37,7 @@ class ArticleJpaServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        articleService = new ArticleJpaService(articleRepository);
+        articleService = new ArticleJpaService(articleRepository, articleConverter);
         article1 = new Article();
         article1.setId(ARTICLE_ID1);
         articles = new ArrayList<>();
@@ -60,6 +64,7 @@ class ArticleJpaServiceTest {
         article2.setMember(new Member());
         articleService.save(article2);
         verify(articleRepository, times(1)).save(any(Article.class));
+        //verify(articleConverter, times(1)).convert(anyString());
     }
 
     @Test

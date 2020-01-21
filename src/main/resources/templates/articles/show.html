@@ -26,14 +26,14 @@
         </div>
         <div class="row">
             <br>
-            <article th:utext="${parser.parse(article.contents)}">
-                <pre><div class="language_java">
+            <article th:utext="${article.contents}">
+                <pre><div class="language-java">
                     import java.util.ArrayList;
                     public class ArticleParser {
                     System.out.println("hello");}
                 </div></pre>
                 <p>this is <code>code snippet</code></p>
-                <pre><div class="language_java">
+                <pre><div class="language-java">
                     import java.util.ArrayList;
                     public class ArticleParser {
                     System.out.println("hello");}
@@ -71,7 +71,7 @@
     </div>
     <script type="text/javascript" src="https://pagecdn.io/lib/ace/1.4.7/ace.js"></script>
     <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="../../static/js/codeformat.js" th:src="@{js/codeformat.js}"></script>
+    <script type="text/javascript" src="../../static/js/codeformat.js" th:src="@{/js/codeformat.js}"></script>
 </main>
 </body>
 </html>

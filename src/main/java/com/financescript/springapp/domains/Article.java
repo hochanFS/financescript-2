@@ -23,6 +23,10 @@ public class Article extends BaseEntity {
     @Lob
     private String contents;
 
+    @Lob
+    @Size(min=1, message = "The article content must not be empty.")
+    private String originalText;
+
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH}, mappedBy = "article")
     private Set<Comment> comments = new HashSet<>();
 

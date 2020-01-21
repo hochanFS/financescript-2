@@ -1,8 +1,10 @@
 package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Article;
+import com.financescript.springapp.dto.tools.ArticleConverter;
 import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,12 @@ import java.util.*;
 public class ArticleJpaService implements ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final ArticleConverter articleConverter;
 
-    public ArticleJpaService(ArticleRepository articleRepository) {
+    @Autowired
+    public ArticleJpaService(ArticleRepository articleRepository, ArticleConverter articleConverter) {
         this.articleRepository = articleRepository;
+        this.articleConverter = articleConverter;
     }
 
     @Override
@@ -35,6 +40,7 @@ public class ArticleJpaService implements ArticleService {
     @Transactional
     public Article save(Article article) {
         article.getMember().addArticle(article);
+        article.setContents(articleConverter.convert(article.getOriginalText()));
         return articleRepository.save(article);
     }
 

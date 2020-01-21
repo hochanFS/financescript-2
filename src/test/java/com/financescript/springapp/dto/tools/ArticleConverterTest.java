@@ -84,5 +84,9 @@ class ArticleConverterTest {
                         "<p>this is <code>code snippet</code></p>"));
     }
 
+    @Test
+    void convert__null() {
+        assertNull(articleConverter.convert(null));
+    }
 
 }

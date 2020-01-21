@@ -24,14 +24,12 @@ public class ArticleController {
     private static final String ARTICLE_FORM_URL = "articles/form";
     private final ArticleService articleService;
     private final MemberService memberService;
-    private final ArticleConverter articleConverter;
     private LocalDateTimeWriter localDateTimeWriter;
 
-    public ArticleController(ArticleService articleService, MemberService memberService,LocalDateTimeWriter localDateTimeWriter, ArticleConverter articleParser) {
+    public ArticleController(ArticleService articleService, MemberService memberService,LocalDateTimeWriter localDateTimeWriter) {
         this.articleService = articleService;
         this.memberService = memberService;
         this.localDateTimeWriter = localDateTimeWriter;
-        this.articleConverter = articleParser;
     }
 
     @GetMapping("/articles")
@@ -74,8 +72,7 @@ public class ArticleController {
     public String showArticle(@PathVariable String id, Model model) {
         model.addAttribute("converter", localDateTimeWriter);
         model.addAttribute("article", articleService.findById(Long.valueOf(id)));
-        model.addAttribute("parser", articleConverter);
-        return "articles/show"; // TODO: create a show template
+        return "articles/show";
     }
 
     @GetMapping("/articles/{id}/update")

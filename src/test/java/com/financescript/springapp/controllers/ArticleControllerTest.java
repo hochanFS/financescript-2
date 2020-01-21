@@ -41,9 +41,6 @@ class ArticleControllerTest {
     @Mock
     Model model;
 
-    @Mock
-    ArticleConverter articleConverter;
-
     ArticleController controller;
 
     MockMvc mockMvc;
@@ -51,7 +48,7 @@ class ArticleControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        controller = new ArticleController(articleService, memberService, localDateTimeWriter, articleConverter);
+        controller = new ArticleController(articleService, memberService, localDateTimeWriter);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -104,6 +101,8 @@ class ArticleControllerTest {
         Article article1 = new Article();
         article1.setId(1L);
         article1.setMember(new Member());
+        article1.setOriginalText("Something");
+        article1.setTitle("Something Appropriate");
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/articles/new")
                 .requestAttr("article", article1);
@@ -125,6 +124,7 @@ class ArticleControllerTest {
         Article article1 = new Article();
         article1.setId(1L);
         article1.setMember(new Member());
+        article1.setOriginalText("Something");
         Principal mockPrincipal = Mockito.mock(Principal.class);
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/articles/new")
@@ -149,6 +149,7 @@ class ArticleControllerTest {
         Article article1 = new Article();
         article1.setId(1L);
         article1.setMember(new Member());
+        article1.setOriginalText("Something");
         Principal mockPrincipal = Mockito.mock(Principal.class);
         Model model = Mockito.mock(Model.class);
 
