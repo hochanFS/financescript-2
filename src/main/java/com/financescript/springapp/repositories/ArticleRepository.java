@@ -9,7 +9,7 @@ import java.util.List;
 public interface ArticleRepository extends CrudRepository<Article, Long> {
     List<Article> findAllByOrderByCreationTimeDesc();
 
-    List<Article> findAllByTitleLike(String search);
+    List<Article> findAllByTitleLikeIgnoreCase(String search);
 
     void delete(Article article);
 }

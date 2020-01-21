@@ -3,7 +3,6 @@ package com.financescript.springapp.controllers;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
-import com.financescript.springapp.dto.tools.ArticleConverter;
 import com.financescript.springapp.services.ArticleService;
 import com.financescript.springapp.services.MemberService;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +52,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void showArticleList() {
+    void showArticleList__nullArticle() {
         List<Article> articles = new ArrayList<>();
         Article article = new Article();
         article.setId(1L);
@@ -63,7 +62,24 @@ class ArticleControllerTest {
 
         when(articleService.findAllByOrderByCreationTimeDesc()).thenReturn(articles);
 
-        assertEquals("articles/article-list", controller.showArticleList(model));
+        assertEquals("articles/article-list", controller.showArticleList(null, model));
+        verify(articleService, times(1)).findAllByOrderByCreationTimeDesc();
+    }
+
+    @Test
+    void showArticleList__givenArticleWithTitle() {
+        List<Article> articles = new ArrayList<>();
+        Article article = new Article();
+        article.setId(1L);
+        article.setTitle("Something");
+        article.setMember(new Member());
+        article.setCreationDateTime();
+        articles.add(new Article());
+
+        when(articleService.findAllByOrderByCreationTimeDesc()).thenReturn(articles);
+
+        assertEquals("articles/article-list", controller.showArticleList(article, model));
+        verify(articleService, times(1)).findAllByTitleLike(anyString());
     }
 
     @Test

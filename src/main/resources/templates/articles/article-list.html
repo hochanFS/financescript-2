@@ -8,29 +8,31 @@
     <!--/*@thymesVar id="article" type="com.financescript.springapp.domains.Article"*/-->
     <div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
     <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
-
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th>Author</th>
-                <th>Title</th>
-                <th>Date</th>
-            </tr>
-            </thead>
-            <tr th:remove="all">
-                <td>hochanlee</td>
-                <td><a href="#"> YELP: Undervalued Tech</a></td>
-                <td>10/30/2015</td>
-            </tr>
-            <tr th:each="article : ${articles}">
-                <td th:text="${article.member.username}">user1</td>
-                <td ><a th:text="${article.title}" th:href="@{'/articles/' + ${article.id} + '/show'}">My article</a></td>
-                <td th:text="${converter.write(article.creationTime)}">01/01/2020 6:30</td>
-            </tr>
-
-        </table>
-        <p><a th:href="@{/articles/new}">New</a></p>
-    </div>
+    <main class="mainsection">
+        <div class="responsive__margin">
+            <div class="search-bar">
+                <form th:object="${article}" th:action="@{/articles}" method="get">
+                    <label>Title</label>
+                    <input th:field="*{title}" size="30" maxlength="80" />
+                </form>
+            </div>
+            <table>
+                <thead>
+                <tr class="theadrow">
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tr th:each="article : ${articles}">
+                    <td th:text="${article.member.username}">user1</td>
+                    <td ><a th:text="${article.title}" th:href="@{'/articles/' + ${article.id} + '/show'}">My article</a></td>
+                    <td th:text="${converter.write(article.creationTime)}">01/01/2020 6:30</td>
+                </tr>
+            </table>
+            <p><a th:href="@{/articles/new}">New</a></p>
+        </div>
+    </main>
+    <div th:replace="fragments/footer_fg :: footer"></div>
 </body>
 </html>

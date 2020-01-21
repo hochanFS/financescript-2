@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -83,6 +81,6 @@ class ArticleJpaServiceTest {
     void findAllByTitleLike() {
         String RANDOM_INPUT_STRING = "Random";
         articleService.findAllByTitleLike(RANDOM_INPUT_STRING);
-        verify(articleRepository, times(1)).findAllByTitleLike(anyString());
+        verify(articleRepository, times(1)).findAllByTitleLikeIgnoreCase(anyString());
     }
 }

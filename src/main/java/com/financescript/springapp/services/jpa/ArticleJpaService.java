@@ -6,7 +6,6 @@ import com.financescript.springapp.repositories.ArticleRepository;
 import com.financescript.springapp.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -53,6 +52,6 @@ public class ArticleJpaService implements ArticleService {
 
     @Override
     public List<Article> findAllByTitleLike(String search) {
-        return articleRepository.findAllByTitleLike("%" + search + "%");
+        return articleRepository.findAllByTitleLikeIgnoreCase("%" + search + "%");
     }
 }

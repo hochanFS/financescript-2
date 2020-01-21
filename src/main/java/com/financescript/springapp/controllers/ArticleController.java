@@ -1,6 +1,5 @@
 package com.financescript.springapp.controllers;
 
-import com.financescript.springapp.dto.tools.ArticleConverter;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -33,8 +33,15 @@ public class ArticleController {
     }
 
     @GetMapping("/articles")
-    public String showArticleList(Model model) {
-        model.addAttribute("articles", articleService.findAllByOrderByCreationTimeDesc());
+    public String showArticleList(Article article, Model model) {
+        if (article == null || article.getTitle() == null) {
+            model.addAttribute("articles", articleService.findAllByOrderByCreationTimeDesc());
+            model.addAttribute("converter", localDateTimeWriter);
+            return ARTICLE_LIST_URL;
+        }
+
+        List<Article> articles = articleService.findAllByTitleLike(article.getTitle());
+        model.addAttribute("articles", articles);
         model.addAttribute("converter", localDateTimeWriter);
         return ARTICLE_LIST_URL;
     }
