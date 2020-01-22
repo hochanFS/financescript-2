@@ -10,11 +10,16 @@
     <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
     <main class="mainsection">
         <div class="responsive__margin">
-            <div class="search-bar">
-                <form th:object="${article}" th:action="@{/articles}" method="get">
-                    <label>Title</label>
-                    <input th:field="*{title}" size="30" maxlength="80" />
-                </form>
+            <div class="search">
+                <div class = "row">
+                    <form th:object="${article}" th:action="@{/articles}" method="get" class="search__form">
+                        <input th:field="*{title}" placeholder="Search by title" class = "search__input"/>
+                        <button type="submit" class="search__submit">
+                            Search
+                        </button>
+                        <a th:href="@{/articles/new}" class="btn btn--green u-padding-very-small-btn">New</a>
+                    </form>
+                </div>
             </div>
             <table>
                 <thead>
@@ -30,7 +35,6 @@
                     <td th:text="${converter.write(article.creationTime)}">01/01/2020 6:30</td>
                 </tr>
             </table>
-            <p><a th:href="@{/articles/new}">New</a></p>
         </div>
     </main>
     <div th:replace="fragments/footer_fg :: footer"></div>

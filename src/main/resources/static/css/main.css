@@ -85,6 +85,9 @@ body {
 .u-padding-small-btn {
     padding: 0.9rem 4rem !important; }
 
+.u-padding-very-small-btn {
+    padding: 0.6rem 3rem !important; }
+
 .u-margin-top-huge-px {
     margin-top: 42px; }
 
@@ -442,7 +445,6 @@ body {
 
 table {
     width: 100%;
-    max-width: 1200px;
     font-size: 1.6rem;
     border-collapse: collapse; }
 table thead {
@@ -473,6 +475,50 @@ table td a:hover {
     text-decoration: underline; }
 table th {
     padding-left: 1.5rem; }
+
+.search {
+    height: 50px;
+    font-size: 2rem;
+    margin-bottom: 3rem; }
+.search__input {
+    background-color: #efe4b0;
+    background-image: url("../img/search.png");
+    background-repeat: no-repeat;
+    background-position-x: 1rem;
+    background-position-y: center;
+    width: 60%;
+    height: 1.5rem;
+    font-size: 1.5rem;
+    font-family: Ubuntu, sans-serif !important;
+    color: inherit;
+    padding: 1rem 45px;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all .3s;
+    float: left; }
+.search__input:focus {
+    outline: none;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid #55c57a; }
+@media (max-width: 56.25em) {
+    .search__input {
+        width: 100%; } }
+.search__submit {
+    margin-left: 1rem;
+    height: 3.7rem;
+    width: 10rem;
+    background-color: #777;
+    font-family: Ubuntu, sans-serif;
+    font-size: 1.5rem;
+    border: 3px solid transparent;
+    color: white; }
+@media (max-width: 56.25em) {
+    .search__submit {
+        margin-top: 1rem; } }
+.search__submit:hover {
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    color: #efe4b0; }
 
 .mainsection {
     margin-top: 5vh;
@@ -519,6 +565,10 @@ table th {
 .logo--img {
     width: 8.9rem;
     height: 8.7rem; }
+@media (max-width: 20rem) {
+    .logo--img {
+        width: 5rem;
+        height: 5rem; } }
 
 .greeting {
     float: right;
@@ -643,7 +693,7 @@ table th {
     right: 2rem;
     background-image: radial-gradient(#e19933, orange);
     z-index: 6000;
-    transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1); }
+    transition: transform 0.6s cubic-bezier(0.86, 0, 0.07, 1); }
 
 .phone-nav__nav {
     display: none;
@@ -652,7 +702,7 @@ table th {
     position: fixed;
     z-index: 6001;
     opacity: 0;
-    transition: all 0.8s cubic-bezier(0.67, -0.5, 0.06, 1.4); }
+    transition: all 0.6s cubic-bezier(0.67, -0.5, 0.06, 1.4); }
 
 .phone-nav__list {
     position: absolute;
