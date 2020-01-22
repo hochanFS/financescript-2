@@ -270,6 +270,11 @@ body {
     font-size: 1.6rem;
     padding: 1.2rem 2rem;
     margin-left: -1.2rem; }
+.anchor__darkorange__small {
+    margin-top: 0.5rem;
+    font-size: 1.6rem;
+    padding: 0.9rem 1.5rem;
+    margin-left: -0.9rem; }
 .anchor__darkorange__footer {
     font-size: 1.6rem;
     padding: 0;
@@ -289,10 +294,40 @@ body {
     text-decoration: none;
     text-transform: uppercase;
     display: inline-block;
+    text-decoration: underline;
     transition: all .2s; }
 .anchor__darkorange:hover, .anchor__darkorange:active {
     color: white;
     background-color: darkorange;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+    transform: rotate(5deg) scale(1.3);
+    text-decoration: none; }
+
+.anchor__green {
+    text-transform: uppercase;
+    display: inline-block;
+    transition: all .2s;
+    position: relative;
+    font-family: Ubuntu, sans-serif;
+    margin: 0;
+    color: #55c57a;
+    text-decoration: underline;
+    cursor: pointer; }
+.anchor__green__small {
+    margin-top: 0.5rem;
+    font-size: 1.6rem;
+    padding: 0.9rem 1.5rem;
+    margin-left: -0.9rem; }
+.anchor__green:link, .anchor__green:visited {
+    color: #55c57a;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    text-decoration: underline;
+    transition: all .2s; }
+.anchor__green:hover, .anchor__green:active {
+    color: white;
+    background-color: #55c57a;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
     transform: rotate(5deg) scale(1.3);
     text-decoration: none; }
@@ -475,6 +510,38 @@ table td a:hover {
     text-decoration: underline; }
 table th {
     padding-left: 1.5rem; }
+
+.article {
+    font-size: 1.5rem;
+    margin: 3rem auto;
+    display: block;
+    max-width: 1400px;
+    min-height: 500px;
+    background-color: #efe4b0;
+    padding: 2rem; }
+.article pre {
+    max-width: 1000px;
+    display: block;
+    margin-left: 3rem; }
+.article code {
+    color: white;
+    background-color: #282a36; }
+.article--title {
+    color: #e19933;
+    text-align: center;
+    font-size: 4.5rem; }
+.article--author {
+    color: #4285f4;
+    font-size: 2rem; }
+.article--normal {
+    color: black;
+    font-size: 2rem; }
+.article--date {
+    color: black;
+    text-align: right;
+    display: block;
+    padding-right: 3rem;
+    font-size: 2rem; }
 
 .search {
     height: 50px;

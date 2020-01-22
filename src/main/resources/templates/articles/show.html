@@ -8,70 +8,81 @@
 <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
 <!--/*@thymesVar id="article" type="com.financescript.springapp.domains.Article"*/-->
 <main class="mainsection">
-    <div class="article-viewer">
-        <div class="row center">
-            <h1 th:text="${article.title}">Title</h1>
-        </div>
-        <div class="row">
-            <div class="col-1-of-2">
-                <span th:text="${article.member.username}">Author</span>
+    <div class="responsive__margin">
+        <div class="article">
+            <div>
+                <span th:if="${sessionUsername == article.member.username}">
+                    <a href="#" th:href="@{'/articles/' + ${article.id} + '/update'}"
+                       class="anchor__green anchor__green__small">Edit</a></span>
+
+                <span th:if="${sessionUsername == article.member.username}">
+                    <a href="#" th:href="@{'/articles/' + ${article.id} + '/delete'}"
+                       class="anchor__darkorange anchor__darkorange__small">Delete</a></span>
+
+                <h1 th:text="${article.title}" class="article--title">Title</h1>
             </div>
-            <div class="col-2-of-2">
-                <!--/*@thymesVar id="sessionUsername" type="java.lang.String"*/-->
-                <span th:text="${converter.write(article.creationTime)}">01/01/2020</span>
-                <span th:if="${sessionUsername == article.member.username}"><a th:href="@{'/articles/' + ${article.id} + '/update'}">Edit</a></span>
-                <span th:if="${sessionUsername == article.member.username}"><a href="#" th:href="@{'/articles/' + ${article.id} + '/delete'}">Delete</a></span>
-                <!--Add alert with CSS-->
-            </div>
-        </div>
-        <div class="row">
-            <br>
-            <article th:utext="${article.contents}">
-                <pre><div class="language-java">
-                    import java.util.ArrayList;
-                    public class ArticleParser {
-                    System.out.println("hello");}
-                </div></pre>
-                <p>this is <code>code snippet</code></p>
-                <pre><div class="language-java">
-                    import java.util.ArrayList;
-                    public class ArticleParser {
-                    System.out.println("hello");}
-                </div></pre>
-            </article>
-        </div>
-    </div>
-    <div class="comments" th:each="comment: ${article.comments}">
-        <div class="comment-viewer">
+
             <div class="row">
+
                 <div class="col-1-of-2">
-                    <span th:text="${comment.member.username}">Author</span>
+                    <span class="article--normal">Author: </span><span th:text="${article.member.username}" class="article--author">Author</span>
                 </div>
-                <div class="col-2-of-2">
-                    <span th:text="${converter.write(comment.creationTime)}">01/01/2020</span>
+                <div class="col-1-of-2">
+                    <!--/*@thymesVar id="sessionUsername" type="java.lang.String"*/-->
+                    <span th:text="${converter.write(article.creationTime)}" class="article--date">01/01/2020</span>
+                    <!--Add alert with CSS-->
                 </div>
+
             </div>
-            <div class="comment-content">
-                <p th:text="${comment.contents}"></p>
+            <div class="row">
+                <br>
+                <article th:utext="${article.contents}">
+                    <pre><div class="language-java">
+                        import java.util.ArrayList;
+                        public class ArticleParser {
+                        System.out.println("hello");}
+                    </div></pre>
+                    <p>this is <code>code snippet</code></p>
+                    <pre><div class="language-java">
+                        import java.util.ArrayList;
+                        public class ArticleParser {
+                        System.out.println("hello");}
+                    </div></pre>
+                </article>
             </div>
-            <div th:each="subComment: ${comment.subComments}">
+        </div>
+        <div class="comments" th:each="comment: ${article.comments}">
+            <div class="comment-viewer">
                 <div class="row">
                     <div class="col-1-of-2">
-                        <span th:text="${subComment.member.username}">Author</span>
+                        <span th:text="${comment.member.username}">Author</span>
                     </div>
                     <div class="col-2-of-2">
-                        <span th:text="${converter.write(subComment.creationTime)}">01/01/2020</span>
+                        <span th:text="${converter.write(comment.creationTime)}">01/01/2020</span>
                     </div>
                 </div>
                 <div class="comment-content">
-                    <p th:text="${subComment.contents}"></p>
+                    <p th:text="${comment.contents}"></p>
+                </div>
+                <div th:each="subComment: ${comment.subComments}">
+                    <div class="row">
+                        <div class="col-1-of-2">
+                            <span th:text="${subComment.member.username}">Author</span>
+                        </div>
+                        <div class="col-2-of-2">
+                            <span th:text="${converter.write(subComment.creationTime)}">01/01/2020</span>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        <p th:text="${subComment.contents}"></p>
+                    </div>
                 </div>
             </div>
         </div>
+        <script type="text/javascript" src="https://pagecdn.io/lib/ace/1.4.7/ace.js"></script>
+        <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="../js/codeformat.js" th:src="@{/js/codeformat.js}"></script>
     </div>
-    <script type="text/javascript" src="https://pagecdn.io/lib/ace/1.4.7/ace.js"></script>
-    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="../../static/js/codeformat.js" th:src="@{/js/codeformat.js}"></script>
 </main>
 </body>
 </html>
