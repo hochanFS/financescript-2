@@ -51,13 +51,28 @@
                 </article>
             </div>
         </div>
+
+        <div class="form-comments">
+            <!--/*@thymesVar id="comment" type="com.financescript.springapp.domains.Comment"*/-->
+            <form th:object="${comment}" th:action="@{'/articles/' + ${article.getId()} + '/comment'}" method="post">
+                <div class="row">
+                    <input type="hidden" th:field="*{id}"/>
+                    <label class="form-comments__user" th:text="${sessionUsername}">USER1</label>
+                    <input type="text" class="form-control" th:field="*{contents}" />
+                </div>
+                <div class="row">
+                    <button type="subm it" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
         <div class="comments" th:each="comment: ${article.comments}">
             <div class="comment-viewer">
                 <div class="row">
                     <div class="col-1-of-2">
                         <span th:text="${comment.member.username}">Author</span>
                     </div>
-                    <div class="col-2-of-2">
+                    <div class="col-1-of-2">
                         <span th:text="${converter.write(comment.creationTime)}">01/01/2020</span>
                     </div>
                 </div>
@@ -69,7 +84,7 @@
                         <div class="col-1-of-2">
                             <span th:text="${subComment.member.username}">Author</span>
                         </div>
-                        <div class="col-2-of-2">
+                        <div class="col-1-of-2">
                             <span th:text="${converter.write(subComment.creationTime)}">01/01/2020</span>
                         </div>
                     </div>

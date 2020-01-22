@@ -1,9 +1,11 @@
 package com.financescript.springapp.controllers;
 
 import com.financescript.springapp.domains.Article;
+import com.financescript.springapp.domains.Comment;
 import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
+import com.financescript.springapp.services.CommentService;
 import com.financescript.springapp.services.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -38,6 +41,9 @@ class ArticleControllerTest {
     MemberService memberService;
 
     @Mock
+    CommentService commentService;
+
+    @Mock
     Model model;
 
     ArticleController controller;
@@ -47,7 +53,7 @@ class ArticleControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        controller = new ArticleController(articleService, memberService, localDateTimeWriter);
+        controller = new ArticleController(articleService, memberService, localDateTimeWriter, commentService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -89,7 +95,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void newRecipe_noPrincipal() throws Exception {
+    void newArticle_noPrincipal() throws Exception {
         // given
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/articles/new");
@@ -101,7 +107,7 @@ class ArticleControllerTest {
     }
 
     @Test
-    void newRecipe_existingPrincipal() throws Exception {
+    void newArticle_existingPrincipal() throws Exception {
         // given
         Principal mockPrincipal = Mockito.mock(Principal.class);
         RequestBuilder requestBuilder = MockMvcRequestBuilders

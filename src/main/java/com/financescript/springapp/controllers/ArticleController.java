@@ -1,10 +1,13 @@
 package com.financescript.springapp.controllers;
 
 import com.financescript.springapp.domains.Article;
+import com.financescript.springapp.domains.Comment;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
+import com.financescript.springapp.services.CommentService;
 import com.financescript.springapp.services.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,12 +27,15 @@ public class ArticleController {
     private static final String ARTICLE_FORM_URL = "articles/form";
     private final ArticleService articleService;
     private final MemberService memberService;
+    private final CommentService commentService;
     private LocalDateTimeWriter localDateTimeWriter;
 
-    public ArticleController(ArticleService articleService, MemberService memberService,LocalDateTimeWriter localDateTimeWriter) {
+    @Autowired
+    public ArticleController(ArticleService articleService, MemberService memberService, LocalDateTimeWriter localDateTimeWriter, CommentService commentService) {
         this.articleService = articleService;
         this.memberService = memberService;
         this.localDateTimeWriter = localDateTimeWriter;
+        this.commentService = commentService;
     }
 
     @GetMapping("/articles")
@@ -79,6 +85,7 @@ public class ArticleController {
     public String showArticle(@PathVariable String id, Model model) {
         model.addAttribute("converter", localDateTimeWriter);
         model.addAttribute("article", articleService.findById(Long.valueOf(id)));
+        model.addAttribute("comment", new Comment());
         return "articles/show";
     }
 
