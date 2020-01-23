@@ -379,6 +379,54 @@ body {
     animation: moveInBottom .5s ease-out .75s;
     animation-fill-mode: backwards; }
 
+.form-comments {
+    font-size: 1.6rem;
+    margin: 3rem auto;
+    display: block;
+    max-width: 1390px;
+    width: 100%; }
+.form-comments__input {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #999;
+    font-size: 1.6rem;
+    resize: none;
+    padding-left: 1rem; }
+.form-comments__input:focus {
+    border: none;
+    outline: none;
+    border-bottom: 3px solid black; }
+
+.comment {
+    font-size: 1.6rem;
+    max-width: 1400px;
+    margin: 3rem auto; }
+.comment--each {
+    width: 100%;
+    border: 1px #999 solid;
+    border-radius: 10px;
+    background-color: #eeeeee; }
+.comment--each:not(:first-child) {
+    margin-top: 1rem; }
+.comment--each:hover {
+    background-color: #d8dfe8; }
+.comment--row {
+    padding-top: 1rem; }
+.comment--author {
+    color: #4285f4;
+    font-size: 1.6rem;
+    padding-left: 1rem; }
+.comment--date {
+    padding-right: 1rem;
+    float: right; }
+.comment--content {
+    padding-left: 1rem;
+    padding-bottom: 1rem; }
+.comment--link {
+    padding-left: 1rem; }
+
 .form__group:not(:last-child) {
     margin-bottom: 2rem; }
 
@@ -512,20 +560,22 @@ table th {
     padding-left: 1.5rem; }
 
 .article {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin: 3rem auto;
     display: block;
-    max-width: 1400px;
+    max-width: 1360px;
     min-height: 500px;
     background-color: #efe4b0;
-    padding: 2rem; }
+    padding: 20px; }
 .article pre {
     max-width: 1000px;
     display: block;
     margin-left: 3rem; }
-.article code {
+.article-code {
     color: white;
-    background-color: #282a36; }
+    background-color: #282a36;
+    font: Consolas, Courier, monospace;
+    display: inline; }
 .article--title {
     color: #e19933;
     text-align: center;

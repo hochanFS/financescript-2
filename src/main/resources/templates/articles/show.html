@@ -11,6 +11,7 @@
     <div class="responsive__margin">
         <div class="article">
             <div>
+                <!--/*@thymesVar id="sessionUsername" type="String.class"*/-->
                 <span th:if="${sessionUsername == article.member.username}">
                     <a href="#" th:href="@{'/articles/' + ${article.id} + '/update'}"
                        class="anchor__green anchor__green__small">Edit</a></span>
@@ -57,40 +58,38 @@
             <form th:object="${comment}" th:action="@{'/articles/' + ${article.getId()} + '/comment'}" method="post">
                 <div class="row">
                     <input type="hidden" th:field="*{id}"/>
-                    <label class="form-comments__user" th:text="${sessionUsername}">USER1</label>
-                    <input type="text" class="form-control" th:field="*{contents}" />
+                    <textarea rows="1" class="form-comments__input" th:field="*{contents}" th:errorclass="has-error"
+                              id="text" placeholder="Write a comment"></textarea>
                 </div>
+                <script src="../../static/js/comment-text.js" th:src="@{js/comment-text.js}"></script>
                 <div class="row">
-                    <button type="subm it" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn--green u-padding-small-btn">Submit</button>
                 </div>
             </form>
         </div>
 
-        <div class="comments" th:each="comment: ${article.comments}">
-            <div class="comment-viewer">
-                <div class="row">
-                    <div class="col-1-of-2">
-                        <span th:text="${comment.member.username}">Author</span>
-                    </div>
-                    <div class="col-1-of-2">
-                        <span th:text="${converter.write(comment.creationTime)}">01/01/2020</span>
-                    </div>
+        <div class="comment" th:each="comment: ${article.comments}">
+            <div class="comment--each">
+                <!--/*@thymesVar id="sessionUsername" type="java.lang.String"*/-->
+                <div th:if="${sessionUsername == comment.member.username}" class = "comment--link">
+                    <span>
+                        <a href="#"
+                           class="anchor__green anchor__green__small">Edit</a></span>
+                    <span>
+                        <a href="#"
+                           class="anchor__darkorange anchor__darkorange__small">Delete</a></span>
                 </div>
-                <div class="comment-content">
-                    <p th:text="${comment.contents}"></p>
+                <div class="row comment--row">
+                    <div class="col-1-of-2">
+                        <span th:text="${comment.member.username}" class="comment--author">Author</span>
+                    </div>
+                    <div class="col-1-of-2">
+                        <span th:text="${converter.write(comment.creationTime)}" class="comment--date">01/01/2020</span>
+                    </div>
+
                 </div>
-                <div th:each="subComment: ${comment.subComments}">
-                    <div class="row">
-                        <div class="col-1-of-2">
-                            <span th:text="${subComment.member.username}">Author</span>
-                        </div>
-                        <div class="col-1-of-2">
-                            <span th:text="${converter.write(subComment.creationTime)}">01/01/2020</span>
-                        </div>
-                    </div>
-                    <div class="comment-content">
-                        <p th:text="${subComment.contents}"></p>
-                    </div>
+                <div class="comment--content">
+                    <p th:text="${comment.contents}">*Contains article context*</p>
                 </div>
             </div>
         </div>
@@ -98,6 +97,7 @@
         <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="../js/codeformat.js" th:src="@{/js/codeformat.js}"></script>
     </div>
+    <div th:replace="fragments/footer_fg :: footer"></div>
 </main>
 </body>
 </html>
