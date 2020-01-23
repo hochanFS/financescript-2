@@ -7,6 +7,7 @@ import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
 import com.financescript.springapp.services.CommentService;
 import com.financescript.springapp.services.MemberService;
+import com.google.inject.internal.MoreTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -22,7 +23,7 @@ import java.security.Principal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -112,4 +113,78 @@ class CommentControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/1/show"));
     }
+
+
+    @Test
+    void deleteArticle_unavailableComment() throws Exception {
+        // given
+        Comment comment = new Comment();
+        comment.setId(1L);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/comment/1/delete")
+                .principal(mockPrincipal);
+
+        // when
+        when(commentService.findById(any())).thenReturn(null);
+        when(mockPrincipal.getName()).thenReturn("USER1"); // authorized user
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles"));
+        verify(commentService, times(0)).secureDelete(any(Comment.class), anyString(), any(Principal.class));
+    }
+
+    @Test
+    void deleteArticle_validComment() throws Exception {
+        // given
+        Comment comment = new Comment();
+        Article article = new Article();
+        article.setId(2L);
+        comment.setArticle(article);
+        Member member = new Member();
+        member.setUsername("USER1");
+        comment.setMember(member);
+        comment.setId(1L);
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/comment/1/delete")
+                .principal(mockPrincipal);
+
+        // when
+        when(commentService.findById(any())).thenReturn(comment);
+        when(mockPrincipal.getName()).thenReturn("USER1"); // authorized user
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles/2/show"));
+        verify(commentService, times(1)).secureDelete(any(Comment.class), anyString(), any(Principal.class));
+    }
+
+    @Test
+    void deleteArticle_nullPrincipal() throws Exception {
+        // given
+        Comment comment = new Comment();
+        Article article = new Article();
+        article.setId(2L);
+        comment.setArticle(article);
+        Member member = new Member();
+        member.setUsername("USER1");
+        comment.setMember(member);
+        comment.setId(1L);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/comment/1/delete");
+
+        // when
+        when(commentService.findById(any())).thenReturn(comment);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/login"));
+        verify(commentService, times(0)).secureDelete(any(Comment.class), anyString(), any(Principal.class));
+    }
+
 }

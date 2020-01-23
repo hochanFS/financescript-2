@@ -76,7 +76,7 @@
                         <a href="#"
                            class="anchor__green anchor__green__small">Edit</a></span>
                     <span>
-                        <a href="#"
+                        <a href="#" th:href="@{'/comment/' + ${comment.id} + '/delete'}"
                            class="anchor__darkorange anchor__darkorange__small">Delete</a></span>
                 </div>
                 <div class="row comment--row">
