@@ -13,12 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -83,9 +81,11 @@ public class ArticleController {
 
     @GetMapping("/articles/{id}/show")
     public String showArticle(@PathVariable String id, Model model) {
-
+        Article article = articleService.findById(Long.valueOf(id));
+        if (article == null)
+            throw new ResourceNotFoundException(); // throw 404 error
         model.addAttribute("converter", localDateTimeWriter);
-        model.addAttribute("article", articleService.findById(Long.valueOf(id)));
+        model.addAttribute("article", article);
         model.addAttribute("comment", new Comment());
         String s;
         if (model.containsAttribute("editId")) {

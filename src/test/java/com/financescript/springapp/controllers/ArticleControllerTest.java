@@ -189,6 +189,24 @@ class ArticleControllerTest {
     }
 
     @Test
+    void showArticle__nonExistentArticle() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        article1.setMember(new Member());
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/152/show")
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(null);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     void showArticle() throws Exception {
         // given
         Article article1 = new Article();
