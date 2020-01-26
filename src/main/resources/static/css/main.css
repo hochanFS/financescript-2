@@ -398,6 +398,8 @@ body {
     border: none;
     outline: none;
     border-bottom: 3px solid black; }
+.form-comments--update {
+    margin: 3rem 3rem; }
 
 .comment {
     font-size: 1.6rem;
@@ -575,7 +577,7 @@ table th {
     color: white;
     background-color: #282a36;
     font: Consolas, Courier, monospace;
-    display: inline; }
+    display: inline-block; }
 .article--title {
     color: #e19933;
     text-align: center;

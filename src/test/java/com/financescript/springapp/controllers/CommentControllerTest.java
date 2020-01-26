@@ -7,7 +7,6 @@ import com.financescript.springapp.domains.util.LocalDateTimeWriter;
 import com.financescript.springapp.services.ArticleService;
 import com.financescript.springapp.services.CommentService;
 import com.financescript.springapp.services.MemberService;
-import com.google.inject.internal.MoreTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -24,8 +23,7 @@ import java.security.Principal;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class CommentControllerTest {
 
@@ -42,7 +40,7 @@ class CommentControllerTest {
     CommentService commentService;
 
     @Mock
-    Model model;
+    Model mockModel;
 
     CommentController controller;
 
@@ -185,6 +183,147 @@ class CommentControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/login"));
         verify(commentService, times(0)).secureDelete(any(Comment.class), anyString(), any(Principal.class));
+    }
+
+    @Test
+    void expandComment__nonExistentComment() throws Exception {
+        // given
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/comment/23/edit");
+
+        // when
+        when(commentService.findById(any())).thenReturn(null);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void expandComment__nullPrincipal() throws Exception {
+        // given
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/comment/23/edit");
+        Comment comment = new Comment();
+        Article article = new Article();
+        article.setId(1L);
+        comment.setArticle(article);
+
+        // when
+        when(commentService.findById(any())).thenReturn(comment);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(flash().attributeCount(0))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles/1/show#form23"));
+    }
+
+    @Test
+    void expandComment__unauthorizedUser() throws Exception {
+        // given
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Comment comment = new Comment();
+        Member member = new Member();
+        member.setUsername("ABC");
+        comment.setMember(member);
+        Article article = new Article();
+        article.setId(1L);
+        comment.setArticle(article);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/comment/23/edit")
+                .principal(mockPrincipal);
+
+        // when
+        when(commentService.findById(any())).thenReturn(comment);
+        when(mockPrincipal.getName()).thenReturn("NOT_EQUAL_RANDOM_USER");
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attributeCount(0))
+                .andExpect(view().name("redirect:/articles/1/show#form23"));
+    }
+
+    @Test
+    void expandComment__valid() throws Exception {
+        // given
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Comment comment = new Comment();
+        Member member = new Member();
+        member.setUsername("ABC");
+        comment.setMember(member);
+        Article article = new Article();
+        article.setId(1L);
+        comment.setArticle(article);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/comment/23/edit")
+                .principal(mockPrincipal);
+
+        // when
+        when(commentService.findById(any())).thenReturn(comment);
+        when(mockPrincipal.getName()).thenReturn("ABC");
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(flash().attribute("editId", 23L))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles/1/show#form23"));
+    }
+
+    @Test
+    void updateComment__nonExistentComment() throws Exception {
+        // given
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/comment/23/update")
+                .param("content", "");
+
+        // when
+        when(commentService.findById(any())).thenReturn(null);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void updateComment__nullPrincipal() throws Exception {
+        // given
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/comment/1/update")
+                .param("content", "");
+        Comment comment = new Comment();
+
+        // when
+        when(commentService.findById(any())).thenReturn(comment);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/login"));
+    }
+
+    @Test
+    void updateComment__valid() throws Exception {
+        // given
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        Comment comment = new Comment();
+        Article article = new Article();
+        article.setId(1L);
+        comment.setArticle(article);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/comment/23/update")
+                .param("content", "new comment text")
+                .principal(mockPrincipal);
+
+        // when
+        when(commentService.findById(any())).thenReturn(comment);
+        when(commentService.save(any())).thenReturn(comment);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles/1/show"));
     }
 
 }

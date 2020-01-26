@@ -204,6 +204,32 @@ class ArticleControllerTest {
         // then
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
+                .andExpect(model().attribute("editId", -1L))
+                .andExpect(model().attributeExists("commentToUpdate"))
+                .andExpect(view().name("articles/show"));
+    }
+
+    @Test
+    void showArticle__withEditId() throws Exception {
+        // given
+        Article article1 = new Article();
+        article1.setId(1L);
+        Comment comment = new Comment();
+        article1.setMember(new Member());
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get("/articles/1/show")
+                .flashAttr("editId", 1L)
+                .requestAttr("article", article1);
+
+        // when
+        when(articleService.findById(any())).thenReturn(article1);
+        when(commentService.findById(any())).thenReturn(comment);
+
+        // then
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("editId", 1L))
+                .andExpect(model().attribute("commentToUpdate", comment))
                 .andExpect(view().name("articles/show"));
     }
 

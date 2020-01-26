@@ -3,6 +3,7 @@ package com.financescript.springapp.controllers;
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.Comment;
 import com.financescript.springapp.domains.util.LocalDateTimeWriter;
+import com.financescript.springapp.exceptions.ResourceNotFoundException;
 import com.financescript.springapp.services.ArticleService;
 import com.financescript.springapp.services.CommentService;
 import com.financescript.springapp.services.MemberService;
@@ -11,14 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -83,9 +83,20 @@ public class ArticleController {
 
     @GetMapping("/articles/{id}/show")
     public String showArticle(@PathVariable String id, Model model) {
+
         model.addAttribute("converter", localDateTimeWriter);
         model.addAttribute("article", articleService.findById(Long.valueOf(id)));
         model.addAttribute("comment", new Comment());
+        String s;
+        if (model.containsAttribute("editId")) {
+            s = "" + model.getAttribute("editId");
+            Comment comment = commentService.findById(Long.valueOf(s));
+            model.addAttribute("commentToUpdate", comment);
+        }
+        else {
+            model.addAttribute("editId", -1L);
+            model.addAttribute("commentToUpdate", new Comment());
+        }
         return "articles/show";
     }
 
@@ -111,5 +122,6 @@ public class ArticleController {
         articleService.secureDelete(article, article.getMember().getUsername(), principal);
         return "redirect:/articles";
     }
+
 
 }

@@ -27,6 +27,8 @@ public class CommentJpaService implements CommentService {
     @Override
     @Transactional
     public Comment save(Comment comment) {
+        comment.getArticle().addComment(comment);
+        comment.getMember().addComment(comment);
         return commentRepository.save(comment);
     }
 

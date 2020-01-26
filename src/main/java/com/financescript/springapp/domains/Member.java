@@ -49,6 +49,12 @@ public class Member extends BaseEntity {
         return this;
     }
 
+    public Member addComment(Comment comment){
+        comment.setMember(this);
+        this.comments.add(comment);
+        return this;
+    }
+
     public Member addRole(Role role) {
         this.roles.add(role);
         return this;

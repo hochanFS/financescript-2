@@ -9,8 +9,8 @@ else {
         element.addEventListener(event, handler, false);
     };
 }
-function init () {
-    var text = document.getElementById('text');
+
+function expand_auto(text) {
     function resize () {
         text.style.height = 'auto';
         text.style.height = text.scrollHeight+'px';
@@ -28,4 +28,9 @@ function init () {
     text.focus();
     text.select();
     resize();
+}
+
+function init () {
+    var texts = document.querySelectorAll(".expanding--comment");
+    texts.forEach(expand_auto);
 }

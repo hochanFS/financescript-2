@@ -2,6 +2,7 @@ package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Article;
 import com.financescript.springapp.domains.Comment;
+import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.repositories.CommentRepository;
 import com.financescript.springapp.services.CommentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,6 +48,8 @@ class CommentJpaServiceTest {
     void save() {
         Comment comment2 = new Comment();
         comment2.setId(2L);
+        comment2.setArticle(new Article());
+        comment2.setMember(new Member());
         commentService.save(comment2);
         verify(commentRepository, times(1)).save(any(Comment.class));
     }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/info_fg :: metainfo ('FS::Articles')">Meta info goes here
 </head>
-<body>
+<body onload="init();">
 
 <div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
 <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
@@ -58,22 +58,22 @@
             <form th:object="${comment}" th:action="@{'/articles/' + ${article.getId()} + '/comment'}" method="post">
                 <div class="row">
                     <input type="hidden" th:field="*{id}"/>
-                    <textarea rows="1" class="form-comments__input" th:field="*{contents}" th:errorclass="has-error"
-                              id="text" placeholder="Write a comment"></textarea>
+                    <textarea rows="1" class="form-comments__input expanding--comment" th:field="*{contents}" th:errorclass="has-error"
+                              placeholder="Write a comment"></textarea>
                 </div>
-                <script src="../../static/js/comment-text.js" th:src="@{js/comment-text.js}"></script>
                 <div class="row">
                     <button type="submit" class="btn btn--green u-padding-small-btn">Submit</button>
                 </div>
             </form>
         </div>
 
-        <div class="comment" th:each="comment: ${article.comments}">
-            <div class="comment--each">
+        <div class="comment">
+            <div class="comment--each" th:each="comment: ${article.comments}">
                 <!--/*@thymesVar id="sessionUsername" type="java.lang.String"*/-->
                 <div th:if="${sessionUsername == comment.member.username}" class = "comment--link">
                     <span>
-                        <a href="#"
+                        <a id="toggle-form1"
+                           href="#" th:href="@{'/comment/' + ${comment.id} + '/edit'}"
                            class="anchor__green anchor__green__small">Edit</a></span>
                     <span>
                         <a href="#" th:href="@{'/comment/' + ${comment.id} + '/delete'}"
@@ -88,16 +88,30 @@
                     </div>
 
                 </div>
-                <div class="comment--content">
+                <div class="comment--content" th:if="${comment.id != editId}">
                     <p th:text="${comment.contents}">*Contains article context*</p>
+                </div>
+
+                <div th:id="'form' + ${comment.id}" th:if="${comment.id == editId}" class="form-comments--update">
+                    <!--/*@thymesVar id="commentToUpdate" type="com.financescript.springapp.domains.Comment"*/-->
+                    <form th:object="${commentToUpdate}" th:action="@{'/comment/' + ${commentToUpdate.getId()} + '/update'}" method="post">
+                        <div class="row">
+                            <input type="hidden" th:field="*{id}" />
+                            <textarea rows="1" class="form-comments__input expanding--comment" name="content" id="content" th:text="*{contents}"></textarea>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn btn--green u-padding-small-btn">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="https://pagecdn.io/lib/ace/1.4.7/ace.js"></script>
-        <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
-        <script type="text/javascript" src="../js/codeformat.js" th:src="@{/js/codeformat.js}"></script>
     </div>
-    <div th:replace="fragments/footer_fg :: footer"></div>
+    <script type="text/javascript" src="https://pagecdn.io/lib/ace/1.4.7/ace.js"></script>
+    <script type="text/javascript" src="../../static/js/codeformat.js" th:src="@{/js/codeformat.js}"></script>
+    <script type="text/javascript" src="../../static/js/comment-text.js" th:src="@{/js/comment-text.js}"></script>
 </main>
+<div th:replace="fragments/footer_fg :: footer"></div>
 </body>
 </html>
+
