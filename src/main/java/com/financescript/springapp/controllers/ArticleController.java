@@ -65,15 +65,14 @@ public class ArticleController {
     public String saveOrUpdate(@Valid @ModelAttribute("article") Article article, Model model, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()){
-            bindingResult.getAllErrors().forEach(objectError -> {
-                log.debug(objectError.toString());
-            });
+            model.addAttribute("article", article);
             return ARTICLE_FORM_URL;
         }
         if (principal == null) {
             model.addAttribute("alertMessage", "Unknown user"); // TODO: consider throwing 403 error
             return "security/login";
         }
+
         article.setMember(memberService.findByUsername(principal.getName()));
         Article newArticle = articleService.save(article);
         return "redirect:/articles/" + newArticle.getId() + "/show";

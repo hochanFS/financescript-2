@@ -2,31 +2,41 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/info_fg :: metainfo ('FS::Articles')">Meta info goes here
 </head>
-<body>
+<body th:object="${article}">
 
 <div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
 <div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
-<main>
-    <form th:object="${article}" th:action="@{/articles/new}" method="post">
-        <input type="hidden" th:field="*{id}"/>
-        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-            <p>Failed to save the article:</p>
-        </div>
-        <div class="pannel-group">
-            <div class="row">
-                <label>Title</label>
-                <input type="text" class="form-control" th:field="*{title}" th:errorclass="has-error" />
-            </div>
-            <div class="option">
 
-            </div>
-            <div class="row">
-                <textarea style="width:60rem; height:60vh; white-space: pre-line;" class="large-input" th:field="*{originalText}" th:errorclass="has-error">
-                </textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+<main class="mainsection">
+    <div class="responsive__margin" >
+            <form th:action="@{/articles/new}" method="post">
+                <div class="article">
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="row u-margin-bottom-small">
+                        <label class="article--label col-1-of-4">Title:</label>
+                        <input type="text" class="article--input col-3-of-4" th:field="*{title}" th:errorclass="has-error" placeholder="The title of your article"/>
+                    </div>
+                    <div class="row u-margin-bottom-small">
+                        <label class="article--label col-1-of-4">Context:</label>
+                        <textarea class="article--textArea col-3-of-4" th:field="*{originalText}" th:errorclass="has-error" name="content" id="content"
+                                  placeholder="The content can be written as if you are writing an .md file. Some features (e.g. &lt;form&gt;) is not supported for security reason"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="article--center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger" style="width: 1400px; max-width: 100%;">
+                    <div th:each="err : ${#fields.errors('title')}" th:errors ="*{title}"
+                         class="alert--danger" role="alert">
+                    </div>
+                </div>
+            </form>
+
+
+    </div>
 </main>
+<div th:replace="fragments/footer_fg :: footer"></div>
 </body>
 </html>
