@@ -62,7 +62,7 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/new")
-    public String saveOrUpdate(@Valid @ModelAttribute("article") Article article, Model model, BindingResult bindingResult, Principal principal){
+    public String saveOrUpdate(@Valid @ModelAttribute("article") Article article, BindingResult bindingResult, Model model, Principal principal){
 
         if(bindingResult.hasErrors()){
             model.addAttribute("article", article);

@@ -185,7 +185,7 @@ class ArticleControllerTest {
         Mockito.when(mockBindingResult.hasErrors()).thenReturn(true);
 
         // then
-        assertEquals("articles/form", controller.saveOrUpdate(article1, model, mockBindingResult, mockPrincipal));
+        assertEquals("articles/form", controller.saveOrUpdate(article1, mockBindingResult, model, mockPrincipal));
     }
 
     @Test
