@@ -54,7 +54,7 @@ class ArticleControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         controller = new ArticleController(articleService, memberService, localDateTimeWriter, commentService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).setControllerAdvice(new ExceptionController()).build();
     }
 
     @Test
@@ -375,6 +375,13 @@ class ArticleControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles"));
         verify(articleService, times(0)).secureDelete(any(Article.class), anyString(), any(Principal.class));
+    }
+
+    @Test
+    public void testGetRecipeNumberFormatException() throws Exception {
+        mockMvc.perform(get("/articles/random_string/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("error/400"));
     }
 
 }

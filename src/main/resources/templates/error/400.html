@@ -11,8 +11,9 @@
     <div class="responsive__margin">
         <div class="error-page">
             <div class="error-page__msg">
-                <h1 class="error-page__title">404 Error</h1>
-                <p class="error-page__paragraph">We can't find the page you are looking for.</p>
+                <h1 class="error-page__title">400 Error</h1>
+                <!--/*@thymesVar id="exception" type="java.lang.Exception"*/-->
+                <p class="error-page__paragraph" th:text="${exception.getMessage()}">We can't find the page you are looking for.</p>
                 <div class="error-page--center"><a href="../index.html" th:href="@{/}" role="button" aria-pressed="true" class="btn btn--green">Return to home page</a></div>
             </div>
         </div>
