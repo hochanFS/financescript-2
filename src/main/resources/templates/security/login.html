@@ -16,7 +16,7 @@
 <main class="security-main">
     <div class="login-form">
         <div class="form-essence">
-            <form th:action="@{/authenticateTheUser}" method="post" class="form">
+            <form th:action="@{/forgotPassword}" method="post" class="form">
                 <div class="form__group">
                     <label for="username" class="form__label">Username</label>
                     <input type="text"
@@ -43,9 +43,9 @@
                                class="btn btn--white"
                                value="Log In">
 
-                        <span class="u-margin-left_medium"></span><a th:href="@{/sign-up}" class="anchor__darkorange anchor__darkorange__big">Join us</a></span>
+                        <span class="u-margin-left_medium"></span><a th:href="@{/sign-up}" class="anchor__darkorange anchor__darkorange__big">Join us</a>
                     </div>
-                    </span><a th:href="@{/sign-up}" class="anchor__darkorange anchor__darkorange__medium">Forgot my password</a></span>
+                    <span><a th:href="@{/forgotPassword}" class="anchor__darkorange anchor__darkorange__medium">Forgot username/password</a></span>
                 </div>
             </form>
 

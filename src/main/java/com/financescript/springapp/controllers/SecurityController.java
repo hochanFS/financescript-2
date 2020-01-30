@@ -22,6 +22,7 @@ public class SecurityController {
     private final String SIGN_UP_PAGE = "security/sign-up";
     private final String SIGN_IN_PAGE = "security/login";
     private final String HOME_PAGE = "index";
+    private final String FOROGT_PASSWORD = "security/forgotPassword";
 
     @Autowired
     public SecurityController(MemberService memberService) {
@@ -67,5 +68,23 @@ public class SecurityController {
     @RequestMapping(value = "/login")
     public String signInForm() {
         return SIGN_IN_PAGE;
+    }
+
+    @GetMapping(value = "/forgotPassword")
+    public String forgotPassword() {
+        return FOROGT_PASSWORD;
+    }
+
+    @PostMapping(value = "/resetPassword")
+    public String resetPassword(@RequestParam("email") String email, Model model) {
+        log.debug("\n>>>>>>>>>>>>We are here1");
+        Member member = memberService.findByEmail(email);
+        if (member == null && ! "".equals(email)) {
+            log.debug("\n>>>>>>>>>>>>We are here");
+            model.addAttribute("noUserFoundError",
+                    "We were unable to find the account associated with the email.");
+            return FOROGT_PASSWORD;
+        }
+        return FOROGT_PASSWORD;
     }
 }

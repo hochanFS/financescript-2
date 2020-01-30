@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -99,5 +101,45 @@ class SecurityControllerTest {
     void signInForm() throws Exception {
         mockMvc.perform(get("/login"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void goToForgotPassword() throws Exception {
+        mockMvc.perform(get("/forgotPassword"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("security/forgotPassword"));
+    }
+
+    @Test
+    void resetPassword__unknownEmail() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/resetPassword")
+                .param("email", "someEmail@gmail.com");
+
+        // when
+        when(memberService.findByEmail(any())).thenReturn(null);
+
+        // TODO: test more advanced logic later..
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("noUserFoundError"))
+                .andExpect(view().name("security/forgotPassword"));
+    }
+
+    @Test
+    void resetPassword__knownEmail() throws Exception {
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/resetPassword")
+                .param("email", "someEmail@gmail.com");
+        Member member = new Member();
+
+        // when
+        when(memberService.findByEmail(any())).thenReturn(member);
+
+        // TODO: test more advanced logic later..
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("noUserFoundError"))
+                .andExpect(view().name("security/forgotPassword"));
     }
 }

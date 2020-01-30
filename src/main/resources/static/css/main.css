@@ -211,6 +211,23 @@ body {
 .login-form > * {
     box-shadow: none; }
 
+.fp-form {
+    content: "";
+    border-radius: 3px;
+    display: block;
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+    height: 30rem;
+    position: relative;
+    width: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #efe4b0; }
+@media (max-width: 56.25em) {
+    .fp-form {
+        width: 90%; } }
+.fp-form > * {
+    box-shadow: none; }
+
 .signup-form {
     content: "";
     border-radius: 3px;

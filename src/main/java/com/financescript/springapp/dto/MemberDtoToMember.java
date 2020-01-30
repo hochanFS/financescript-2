@@ -39,7 +39,7 @@ public class MemberDtoToMember implements Converter<MemberDto, Member> {
         member.setSubComments(source.getSubComments());
         member.setPassword(passwordEncoder.encode(source.getPassword())); // encrypt the password before saving
         member.setRoles(Arrays.asList(roleService.findRoleByName("ROLE_MEMBER")));
-        member.setEmail(source.getEmail());
+        member.setEmail(source.getEmail().toLowerCase());
         if (member.getRoles().size() == 0) {
             member.addRole(new Role("MEMBER"));
         }
