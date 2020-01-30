@@ -1,11 +1,13 @@
 package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Member;
+import com.financescript.springapp.domains.PasswordResetToken;
 import com.financescript.springapp.domains.Role;
 import com.financescript.springapp.dto.MemberDto;
 import com.financescript.springapp.dto.MemberDtoToMember;
 import com.financescript.springapp.dto.MemberToMemberDto;
 import com.financescript.springapp.repositories.MemberRepository;
+import com.financescript.springapp.repositories.PasswordTokenRepository;
 import com.financescript.springapp.services.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,11 +28,14 @@ public class MemberJpaService implements MemberService {
     private final MemberRepository memberRepository;
     private final MemberDtoToMember memberDtoToMember;
     private final MemberToMemberDto memberToMemberDto;
+    private final PasswordTokenRepository passwordTokenRepository;
 
-    public MemberJpaService(MemberRepository memberRepository, MemberDtoToMember memberDtoToMember, MemberToMemberDto memberToMemberDto) {
+    public MemberJpaService(MemberRepository memberRepository, MemberDtoToMember memberDtoToMember,
+                            MemberToMemberDto memberToMemberDto, PasswordTokenRepository passwordTokenRepository) {
         this.memberRepository = memberRepository;
         this.memberDtoToMember = memberDtoToMember;
         this.memberToMemberDto = memberToMemberDto;
+        this.passwordTokenRepository = passwordTokenRepository;
     }
 
     @Override
@@ -92,5 +97,13 @@ public class MemberJpaService implements MemberService {
     public Member findByEmail(String email) {
         email = email.toLowerCase();
         return memberRepository.findByEmail(email);
+    }
+
+    @Override
+    public void createPasswordResetTokenForUser(Member user, String token) {
+        PasswordResetToken myToken = new PasswordResetToken();
+        myToken.setToken(token);
+        myToken.setUser(user);
+        passwordTokenRepository.save(myToken);
     }
 }

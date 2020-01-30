@@ -1,11 +1,13 @@
 package com.financescript.springapp.services.jpa;
 
 import com.financescript.springapp.domains.Member;
+import com.financescript.springapp.domains.PasswordResetToken;
 import com.financescript.springapp.domains.Role;
 import com.financescript.springapp.dto.MemberDto;
 import com.financescript.springapp.dto.MemberDtoToMember;
 import com.financescript.springapp.dto.MemberToMemberDto;
 import com.financescript.springapp.repositories.MemberRepository;
+import com.financescript.springapp.repositories.PasswordTokenRepository;
 import com.financescript.springapp.services.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,9 @@ class MemberJpaServiceTest {
     @Mock
     MemberDtoToMember memberDtoToMember;
 
+    @Mock
+    PasswordTokenRepository passwordTokenRepository;
+
     MemberService memberService;
 
     private final Long USER1_ID = 1L;
@@ -43,7 +48,7 @@ class MemberJpaServiceTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         List<Member> members = new ArrayList<>();
-        memberService = new MemberJpaService(memberRepository, memberDtoToMember, memberToMemberDto);
+        memberService = new MemberJpaService(memberRepository, memberDtoToMember, memberToMemberDto, passwordTokenRepository);
         member1 = new Member();
         member1.setId(USER1_ID);
         members.add(member1);
@@ -117,5 +122,11 @@ class MemberJpaServiceTest {
         when(memberRepository.findByEmail(anyString())).thenReturn(member1);
         memberService.findByEmail("Test1@financescript.com");
         verify(memberRepository, times(1)).findByEmail("test1@financescript.com");
+    }
+
+    @Test
+    public void createPasswordResetTokenForUser() {
+        memberService.createPasswordResetTokenForUser(new Member(), "abcdef");
+        verify(passwordTokenRepository, times(1)).save(any(PasswordResetToken.class));
     }
 }

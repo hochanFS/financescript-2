@@ -14,4 +14,5 @@ public interface MemberService extends UserDetailsService {
     Member save(MemberDto memberDto);
     Member findByUsername(String username);
     Member findByEmail(String email);
+    void createPasswordResetTokenForUser(Member user, String token);
 }

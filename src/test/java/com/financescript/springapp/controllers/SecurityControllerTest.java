@@ -2,6 +2,7 @@ package com.financescript.springapp.controllers;
 
 import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.dto.MemberDto;
+import com.financescript.springapp.services.EmailService;
 import com.financescript.springapp.services.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,9 @@ class SecurityControllerTest {
     private MemberService memberService;
 
     @Mock
+    private EmailService emailService;
+
+    @Mock
     private Model model;
 
     MemberDto memberDto;
@@ -43,7 +47,7 @@ class SecurityControllerTest {
     void setUp() {
 
         MockitoAnnotations.initMocks(this);
-        controller = new SecurityController(memberService);
+        controller = new SecurityController(memberService, emailService);
         memberDto = new MemberDto();
         memberDto.setEmail("test1@gmail.com");
         memberDto.setPassword("test123");
@@ -111,6 +115,20 @@ class SecurityControllerTest {
     }
 
     @Test
+    void resetPassword__emptyMail() throws Exception {
+        String s;
+        RequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/resetPassword")
+                .param("email", ""); // testing "email" == null
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("success", "false"))
+                .andExpect(model().attributeDoesNotExist("noUserFoundError"))
+                .andExpect(view().name("security/forgotPassword"));
+    }
+
+    @Test
     void resetPassword__unknownEmail() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/resetPassword")
@@ -119,27 +137,34 @@ class SecurityControllerTest {
         // when
         when(memberService.findByEmail(any())).thenReturn(null);
 
-        // TODO: test more advanced logic later..
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
+                .andExpect(model().attribute("success", "false"))
                 .andExpect(model().attributeExists("noUserFoundError"))
                 .andExpect(view().name("security/forgotPassword"));
     }
 
     @Test
     void resetPassword__knownEmail() throws Exception {
+        // given
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post("/resetPassword")
-                .param("email", "someEmail@gmail.com");
+                .param("email", "nyhochan.lee@gmail.com");
         Member member = new Member();
+        member.setUsername("user1");
+        member.setEmail("nyhochan.lee@gmail.com");
+        member.setId(1L);
 
         // when
         when(memberService.findByEmail(any())).thenReturn(member);
 
-        // TODO: test more advanced logic later..
+        // then
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
                 .andExpect(model().attributeDoesNotExist("noUserFoundError"))
+                .andExpect(model().attribute("success", "true"))
                 .andExpect(view().name("security/forgotPassword"));
+        verify(memberService, times(1)).createPasswordResetTokenForUser(any(Member.class), anyString());
+        verify(emailService, times(1)).sendSimpleMessage(anyString(), anyString(), anyString());
     }
 }

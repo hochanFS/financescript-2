@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
+@Entity
 public class PasswordResetToken {
     private static final int EXPIRATION = 60 * 24; // the token will expire in 24 hour
 
