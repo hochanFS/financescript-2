@@ -18,11 +18,19 @@ class GlobalControllerAdviceTest {
     }
 
     @Test
-    void populateUser_activePrincipal() {
+    void populateUser_activeShortPrincipal() {
         Principal principal = Mockito.mock(Principal.class);
         when(principal.getName()).thenReturn("USER1");
 
         assertEquals("USER1", globalControllerAdvice.populateUser(principal));
+    }
+
+    @Test
+    void populateUser_activeLongPrincipal() {
+        Principal principal = Mockito.mock(Principal.class);
+        when(principal.getName()).thenReturn("USER1234567890123456");
+
+        assertNull(globalControllerAdvice.populateUser(principal));
     }
 
     @Test

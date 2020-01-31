@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.swing.text.html.HTML;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -32,6 +34,8 @@ public class DevelopmentSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/register").permitAll()
                 .and().authorizeRequests().antMatchers("/login").permitAll()
                 .and().formLogin().loginPage("/login").loginProcessingUrl("/authenticateTheUser").permitAll();
+        httpSecurity.authorizeRequests().antMatchers("/updatePassword*", "/savePassword*")
+                .hasAuthority("CHANGE_PASSWORD_PRIVILEGE");
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
     }

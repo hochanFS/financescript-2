@@ -2,13 +2,14 @@ package com.financescript.springapp.controllers;
 
 import com.financescript.springapp.domains.Member;
 import com.financescript.springapp.dto.MemberDto;
+import com.financescript.springapp.dto.PasswordDto;
 import com.financescript.springapp.services.EmailService;
 import com.financescript.springapp.services.MemberService;
+import com.financescript.springapp.services.PasswordTokenService;
 import lombok.extern.slf4j.Slf4j;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Locale;
 import java.util.UUID;
 
 @Controller
@@ -26,15 +26,17 @@ public class SecurityController {
 
     private final MemberService memberService;
     private final EmailService emailService;
+    private final PasswordTokenService passwordTokenService;
     private final String SIGN_UP_PAGE = "security/sign-up";
     private final String SIGN_IN_PAGE = "security/login";
     private final String HOME_PAGE = "index";
     private final String FOROGT_PASSWORD = "security/forgotPassword";
 
     @Autowired
-    public SecurityController(MemberService memberService, EmailService emailService) {
+    public SecurityController(MemberService memberService, EmailService emailService, PasswordTokenService passwordTokenService) {
         this.memberService = memberService;
         this.emailService = emailService;
+        this.passwordTokenService = passwordTokenService;
     }
 
     @InitBinder
@@ -106,9 +108,20 @@ public class SecurityController {
         return FOROGT_PASSWORD;
     }
 
+    @GetMapping(value = "/resetPassword/user/changePassword")
+    public String readToken(Model model,
+                                         @RequestParam("id") Long id, @RequestParam("token") String token) {
+        String result = passwordTokenService.validatePasswordToken(id, token);
+        if (result != null) {
+            model.addAttribute("message", result);
+            return "redirect:/login";
+        }
+        return "redirect:/updatePassword";
+    }
+
     private String writeEmail(String appUrl, Member member, String token) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Hi ").append(member.getUsername()).append('\n')
+        sb.append("Hi ").append(member.getUsername()).append("\n\n")
                 .append("We have received a request from this email address \"")
                 .append(member.getEmail()).append("\"")
                 .append(" to reset the password on FinanceScript.\n\n")
@@ -119,4 +132,30 @@ public class SecurityController {
                 .append("\n\nIf you did not initiate such a request from us, please ignore this email.");
         return sb.toString();
     }
+
+    @GetMapping(value = "/updatePassword")
+    public String showChangePasswordPage(Model model) {
+        model.addAttribute("passwordDto", new PasswordDto());
+        return "security/changePassword";
+    }
+
+    @PostMapping(value = "/updatePassword")
+    public String updatePassword(@Valid @ModelAttribute("passwordDto") PasswordDto passwordDto, BindingResult bindingResult, Model model) {
+        Member user =
+                (Member) SecurityContextHolder.getContext()
+                        .getAuthentication().getPrincipal();
+        String username = user.getUsername();
+        memberService.changePassword(username, passwordDto);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("success", "false");
+            return "redirect:/updatePassword";
+        }
+        else {
+            model.addAttribute("success", "true");
+            return "redirect:/login";
+        }
+
+    }
+
+
 }

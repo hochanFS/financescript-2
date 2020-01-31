@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Entity
-public class PasswordResetToken {
-    private static final int EXPIRATION = 60 * 24; // the token will expire in 24 hour
+public class PasswordResetToken extends BaseEntity {
+    public static final int EXPIRATION = 60 * 24; // the token will expire in 24 hour
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

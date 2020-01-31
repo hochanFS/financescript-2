@@ -6,6 +6,7 @@ import com.financescript.springapp.domains.Role;
 import com.financescript.springapp.dto.MemberDto;
 import com.financescript.springapp.dto.MemberDtoToMember;
 import com.financescript.springapp.dto.MemberToMemberDto;
+import com.financescript.springapp.dto.PasswordDto;
 import com.financescript.springapp.repositories.MemberRepository;
 import com.financescript.springapp.repositories.PasswordTokenRepository;
 import com.financescript.springapp.services.MemberService;
@@ -14,9 +15,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -104,6 +108,17 @@ public class MemberJpaService implements MemberService {
         PasswordResetToken myToken = new PasswordResetToken();
         myToken.setToken(token);
         myToken.setUser(user);
+        myToken.setExpiryDate(LocalDateTime.now().plusMinutes(PasswordResetToken.EXPIRATION));
         passwordTokenRepository.save(myToken);
+    }
+
+    @Override
+    public Member changePassword(String username, PasswordDto passwordDto) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Member member = memberRepository.findByUsername(username);
+        if (member == null)
+            return null;
+        member.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+        return memberRepository.save(member);
     }
 }

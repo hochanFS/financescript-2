@@ -6,6 +6,7 @@ import com.financescript.springapp.domains.Role;
 import com.financescript.springapp.dto.MemberDto;
 import com.financescript.springapp.dto.MemberDtoToMember;
 import com.financescript.springapp.dto.MemberToMemberDto;
+import com.financescript.springapp.dto.PasswordDto;
 import com.financescript.springapp.repositories.MemberRepository;
 import com.financescript.springapp.repositories.PasswordTokenRepository;
 import com.financescript.springapp.services.MemberService;
@@ -15,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -128,5 +130,29 @@ class MemberJpaServiceTest {
     public void createPasswordResetTokenForUser() {
         memberService.createPasswordResetTokenForUser(new Member(), "abcdef");
         verify(passwordTokenRepository, times(1)).save(any(PasswordResetToken.class));
+    }
+
+    @Test
+    public void changePassword__availableMember() {
+        PasswordDto passwordDto = new PasswordDto();
+        passwordDto.setPassword("random_password");
+        Member temp = new Member();
+        when(memberService.findByUsername("USER1")).thenReturn(temp);
+
+        Member member = memberService.changePassword("USER1", passwordDto);
+        verify(memberRepository, times(1)).findByUsername(anyString());
+        verify(memberRepository, times(1)).save(any(Member.class));
+    }
+
+    @Test
+    public void changePassword__unavailableMember() {
+        PasswordDto passwordDto = new PasswordDto();
+        passwordDto.setPassword("random_password");
+        Member temp = new Member();
+        when(memberService.findByUsername("USER1")).thenReturn(null);
+
+        Member member = memberService.changePassword("USER1", passwordDto);
+        verify(memberRepository, times(1)).findByUsername(anyString());
+        verify(memberRepository, times(0)).save(any(Member.class));
     }
 }
