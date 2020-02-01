@@ -227,6 +227,11 @@ body {
         width: 90%; } }
 .fp-form > * {
     box-shadow: none; }
+.fp-form--center {
+    display: block;
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 11.6rem; }
 
 .signup-form {
     content: "";
