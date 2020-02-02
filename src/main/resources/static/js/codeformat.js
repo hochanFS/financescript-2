@@ -1,7 +1,7 @@
 var editor_java = document.querySelectorAll(".language-java");
 editor_java.forEach(function(editorElem) {
     var editor_java = ace.edit(editorElem);
-    editor_java.setTheme("ace/theme/twilight");
+    editor_java.setTheme("ace/theme/dracula");
     editor_java.setOptions({
         maxLines: Infinity
     });
@@ -12,18 +12,18 @@ editor_java.forEach(function(editorElem) {
 var editor_cpp = document.querySelectorAll(".language-cpp");
 editor_cpp.forEach(function(editorElem) {
     var editor_cpp = ace.edit(editorElem);
-    editor_cpp.setTheme("ace/theme/twilight");
+    editor_cpp.setTheme("ace/theme/dracula");
     editor_cpp.setOptions({
         maxLines: Infinity
     });
     editor_cpp.setReadOnly(true);
-    editor_cpp.getSession().setMode("ace/mode/cpp");
+    editor_cpp.getSession().setMode("ace/mode/c_cpp");
 });
 
 var editor_python = document.querySelectorAll(".language-python");
 editor_python.forEach(function(editorElem) {
     var editor_python = ace.edit(editorElem);
-    editor_python.setTheme("ace/theme/twilight");
+    editor_python.setTheme("ace/theme/dracula");
     editor_python.setOptions({
         maxLines: Infinity
     });
