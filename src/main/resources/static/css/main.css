@@ -275,6 +275,20 @@ body {
     margin: 1rem auto;
     text-align: center !important; }
 
+.miscellaneous {
+    margin: 5vh 0;
+    min-height: 64vh;
+    font-size: 1.5rem; }
+.miscellaneous h1 {
+    color: orange; }
+.miscellaneous ol {
+    margin: 3rem 0;
+    padding-left: 3rem; }
+.miscellaneous P {
+    margin-top: 1rem; }
+.miscellaneous a {
+    padding: 0; }
+
 .alert {
     position: relative;
     height: 15rem;
@@ -335,6 +349,19 @@ body {
     color: white;
     background-color: darkorange;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+    text-decoration: none; }
+.anchor__darkorange__misc {
+    font-size: 1.5rem;
+    padding: 0;
+    text-decoration: underline; }
+.anchor__darkorange__misc:link, .anchor__darkorange__misc:visited {
+    color: darkorange;
+    text-decoration: underline;
+    display: inline-block;
+    transition: all .2s; }
+.anchor__darkorange__misc:hover, .anchor__darkorange__misc:active {
+    color: white;
+    background-color: darkorange;
     text-decoration: none; }
 .anchor__darkorange:link, .anchor__darkorange:visited {
     color: darkorange;
