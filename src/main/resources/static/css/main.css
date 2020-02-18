@@ -842,7 +842,7 @@ table th {
 .navigation {
     background-color: #3c3c3c;
     height: 3rem;
-    min-height: 2.75vh; }
+    min-height: 1.75vh; }
 @media (max-width: 37.5em) {
     .navigation {
         display: none;
@@ -859,7 +859,7 @@ table th {
     vertical-align: middle;
     overflow: hidden;
     height: 3rem;
-    min-height: 2.75vh;
+    min-height: 1.75vh;
     position: relative; }
 .navigation__item:not(:last-child) {
     margin-right: 1.5rem; }
