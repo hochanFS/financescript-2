@@ -19,8 +19,8 @@ Amazon Web Service | Deployment
 CircleCI | Integration Testing
 CSS | Enhancing web GUI
 H2 | Development database
-Java SDK 11 | Primary backend language
-JavaScript | Secondary backend language
+Java SDK 11 | Backend language
+JavaScript | Frontend language
 JUnit | Unit testing
 Lombok | Logging, builder design pattern, convenience
 Mockito | Separation of concerns in unit testing

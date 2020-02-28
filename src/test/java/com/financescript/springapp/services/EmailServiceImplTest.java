@@ -18,7 +18,7 @@ class EmailServiceImplTest {
         emailSender.setHost("smtp.gmail.com");
         emailSender.setPort(587);
         emailSender.setUsername("donotreply.financescript@gmail.com");
-        emailSender.setPassword("Random!CGA!%)HBFASH$%H");
+        emailSender.setPassword("!gbahj9ASDBDjravjah08bzxkjn19-o");
         Properties props = emailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
