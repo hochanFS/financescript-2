@@ -41,7 +41,6 @@ public class EarningsDataDownloader {
     @Scheduled(cron="0 0/5 8,16,17 * * MON-FRI", zone="EST")
     @Synchronized
     public void fillEarningsSummary() {
-        System.out.println("Filling Earnings Summary..."); //TODO: remove
         List<TwitterDto> symbols = twitterDataDownloader.getWatchList();
 
         if (!symbols.isEmpty()) {
@@ -103,14 +102,14 @@ public class EarningsDataDownloader {
         }
     }
 
-    public static void main(String[] args) {
-        TwitterDataDownloader twitterDataDownloader = new TwitterDataDownloader();
-        EarningsDataDownloader earningsDataDownloader = new EarningsDataDownloader(twitterDataDownloader);
-        earningsDataDownloader.fillEarningsSummary();
-
-        for (String s : earningsDataDownloader.getEarningsSummary()) {
-            System.out.println(s);
-        }
-    }
+//    public static void main(String[] args) {
+//        TwitterDataDownloader twitterDataDownloader = new TwitterDataDownloader();
+//        EarningsDataDownloader earningsDataDownloader = new EarningsDataDownloader(twitterDataDownloader);
+//        earningsDataDownloader.fillEarningsSummary();
+//
+//        for (String s : earningsDataDownloader.getEarningsSummary()) {
+//            System.out.println(s);
+//        }
+//    }
 
 }

@@ -25,6 +25,11 @@ public class TwitterDto {
         return symbol.equals(that.symbol);
     }
 
+    public TwitterDto(String symbol, String message) {
+        this.symbol = symbol;
+        this.message = message;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(symbol);
@@ -32,9 +37,8 @@ public class TwitterDto {
 
     @Override
     public String toString() {
-        return "TwitterDto{" +
-                "symbol='" + symbol + '\'' +
-                ", message='" + message + '\'' +
-                '}';
+        return "new TwitterDto(\"" + symbol +
+                "\", \"" + message +
+                "\")";
     }
 }

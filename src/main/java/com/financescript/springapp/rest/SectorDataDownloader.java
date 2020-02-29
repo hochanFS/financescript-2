@@ -36,7 +36,7 @@ public class SectorDataDownloader {
         this.currentSectors = new SectorDto();
     }
 
-    @Scheduled(fixedRate = 1000 * 60 * 5)  // should execute every 15 minutes
+    @Scheduled(fixedRate = 1000 * 60 * 5)  // should execute every 5 minutes
     @Synchronized
     public void getData() {
         Date date = new Date();
