@@ -37,7 +37,7 @@ public class TwitterDto {
 
     @Override
     public String toString() {
-        return "new TwitterDto(\"" + symbol +
+        return "TwitterDto(\"" + symbol +
                 "\", \"" + message +
                 "\")";
     }

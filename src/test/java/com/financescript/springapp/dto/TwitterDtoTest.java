@@ -40,4 +40,9 @@ class TwitterDtoTest {
         tweets.add(tweet3);
         assertEquals(2, tweets.size());
     }
+
+    @Test
+    void testToString() {
+        assertEquals("TwitterDto(\"AAPL\", \"reports...\")", tweet1.toString());
+    }
 }
