@@ -5,6 +5,7 @@ import com.financescript.springapp.dto.RankValueDto;
 import com.financescript.springapp.dto.SectorDto;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,8 @@ public class SectorDataDownloader {
         this.currentSectors = new SectorDto();
     }
 
-    @Scheduled(fixedRate = 1000 * 60 * 15)  // should execute every 15 minutes
+    @Scheduled(fixedRate = 1000 * 60 * 5)  // should execute every 15 minutes
+    @Synchronized
     public void getData() {
         Date date = new Date();
         date.toInstant().atZone(ZoneId.of("America/New_York"));
