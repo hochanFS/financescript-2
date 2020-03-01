@@ -35,7 +35,7 @@ public class ProductionSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().formLogin().loginPage("/login").loginProcessingUrl("/authenticateTheUser").permitAll();
         httpSecurity.authorizeRequests().antMatchers("/updatePassword*", "/savePassword*")
                 .hasAuthority("CHANGE_PASSWORD_PRIVILEGE");
-        // httpSecurity.csrf().disable();
+        httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
     }
 
