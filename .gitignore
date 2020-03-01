@@ -31,4 +31,4 @@ build/
 .vscode/
 
 ### PRODUCTION SETTING
-src/resources/application-production.properties
+!/src/main/resources/application-production.properties
