@@ -95,7 +95,7 @@ class SecurityControllerTest {
         when(memberService.findByUsername(any())).thenReturn(null);
         when(memberService.findByEmail(any())).thenReturn(null);
         doReturn(false).when(mockBindingResult).hasErrors();
-        assertEquals("index", controller.processSignUpForm(memberDto, mockBindingResult, model));
+        assertEquals("security/login", controller.processSignUpForm(memberDto, mockBindingResult, model));
     }
 
     @Test

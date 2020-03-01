@@ -1,6 +1,7 @@
 package com.financescript.springapp.config;
 
 import com.financescript.springapp.services.MemberService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,11 +13,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Profile("development")
+@Slf4j
 public class DevelopmentSecurityConfig extends WebSecurityConfigurerAdapter {
     private final MemberService memberService;
 
@@ -54,5 +59,4 @@ public class DevelopmentSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
         return auth;
     }
-
 }

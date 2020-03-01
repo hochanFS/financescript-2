@@ -12,36 +12,42 @@ import org.springframework.stereotype.Component;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
-@Getter
 @Setter
+@Getter
 public class EarningsDataDownloader {
     private final String MARKET_STATUS_URL = "https://financialmodelingprep.com/api/v3/is-the-market-open";
     private final String PREFIX_URL = "https://financialmodelingprep.com/api/v3/company/profile/";
     private final int MAX_SIZE = 10;
 
-    private ArrayDeque<String> earningsSummary;
+    private LinkedList<String> earningsSummary;
     private TwitterDataDownloader twitterDataDownloader;
     private Set<TwitterDto> currentSymbolSet;
     private Set<String> symbolsInEarningsSummary;
+    private String[] earnings;
 
     @Autowired
     public EarningsDataDownloader(TwitterDataDownloader twitterDataDownloader) {
         this.twitterDataDownloader = twitterDataDownloader;
         this.twitterDataDownloader.updateWatchList();
-        this.earningsSummary = new ArrayDeque<>();
+        this.earningsSummary = new LinkedList<>();
         this.currentSymbolSet = new HashSet<>();
         this.symbolsInEarningsSummary = new HashSet<>();
+        this.fillEarningsSummary();
     }
 
     @Scheduled(cron="0 0/5 8,16,17 * * MON-FRI", zone="EST")
     @Synchronized
     public void fillEarningsSummary() {
         List<TwitterDto> symbols = twitterDataDownloader.getWatchList();
+        Date date = new Date();
+        date.toInstant().atZone(ZoneId.of("America/New_York"));
+        log.info("Getting Earnings feed @ " + date.toString());
 
         if (!symbols.isEmpty()) {
             for (int i = symbols.size() - 1; i >= 0; i--) {
@@ -56,6 +62,7 @@ public class EarningsDataDownloader {
                         earningsSummary.addFirst(notification);
                     }
                 }
+//                log.info(earningsSummary.toString());
                 try {
                     TimeUnit.MILLISECONDS.sleep(10);
                 } catch (Exception exc) {
@@ -102,7 +109,7 @@ public class EarningsDataDownloader {
         }
     }
 
-//    public static void main(String[] args) {
+    //    public static void main(String[] args) {
 //        TwitterDataDownloader twitterDataDownloader = new TwitterDataDownloader();
 //        EarningsDataDownloader earningsDataDownloader = new EarningsDataDownloader(twitterDataDownloader);
 //        earningsDataDownloader.fillEarningsSummary();

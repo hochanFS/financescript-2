@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/info_fg :: metainfo ('FinanceScript 2.0')">Meta info goes here
+</head>
+<body>
+<div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
+<div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
+<main class="mainsection">
+    <div class="responsive__margin">
+        <div class="error-page">
+            <div class="error-page__msg">
+                <h1 class="error-page__title">Not Implemented</h1>
+                <p class="error-page__paragraph">We promise to make this page more interesting.</p>
+                <div class="error-page--center"><a href="../index.html" th:href="@{/}" role="button" aria-pressed="true" class="btn btn--green">Return to home page</a></div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

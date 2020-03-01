@@ -162,6 +162,46 @@ body {
     background-image: #f0f0f0;
     height: 100vh; }
 
+.market--rest {
+    height: 37.5rem;
+    padding: 2rem;
+    background-color: #e7e7e7;
+    border-radius: 5px;
+    overflow: hidden; }
+.market--rest h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem; }
+
+.feed {
+    height: 37.5rem;
+    padding: 2rem;
+    background-color: #efe4b0;
+    border-radius: 5px;
+    overflow: auto;
+    font-size: 1.5rem; }
+.feed h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem; }
+.feed ul {
+    text-decoration: none; }
+.feed ul li {
+    list-style: none;
+    min-height: 3rem; }
+.feed--a {
+    color: darkorange; }
+.feed--a:link, .feed--a:visited {
+    color: darkorange;
+    text-decoration: underline;
+    display: inline-block;
+    transition: all .2s; }
+.feed--a:hover, .feed--a:active {
+    color: white;
+    background-color: darkorange;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+    text-decoration: none; }
+
 .strip {
     height: 1.5vh;
     background-color: #24292e;
@@ -602,37 +642,77 @@ body {
     .form-essence {
         width: 85%; } }
 
-table {
+.table {
     width: 100%;
     font-size: 1.6rem;
     border-collapse: collapse; }
-table thead {
+.table thead {
     background-color: #333;
     color: white;
     text-align: left; }
-table tr {
+.table tr {
     display: table-row;
     text-decoration: none;
     line-height: 4.2rem;
     padding-top: auto;
     border-bottom: 1px black solid;
     text-align: left; }
-table tr:last-child {
+.table tr:last-child {
     border-bottom: none; }
-table tr:not(.theadrow):hover {
+.table tr:not(.theadrow):hover {
     background-color: #efe4b0; }
-table td {
+.table td {
     text-align: left;
     padding-left: 1.5rem;
     border-bottom: thin #333 2px; }
-table td a {
+.table td a {
     width: 100%;
     text-decoration: none;
     color: black;
     display: block; }
-table td a:hover {
+.table td a:hover {
     text-decoration: underline; }
-table th {
+.table th {
+    padding-left: 1.5rem; }
+
+.sectorscreen {
+    width: 100%;
+    font-size: 1.5rem;
+    border-collapse: collapse; }
+.sectorscreen tr {
+    display: table-row;
+    text-decoration: none;
+    line-height: 3rem;
+    padding-top: auto;
+    text-align: left; }
+.sectorscreen tr:last-child {
+    border-bottom: none; }
+.sectorscreen td {
+    text-align: left;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-bottom: thin #333 2px; }
+.sectorscreen td .card--green {
+    display: block;
+    text-align: center;
+    margin-top: 0.2rem;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0.2rem;
+    overflow: hidden;
+    background-color: #33a25a;
+    color: white; }
+.sectorscreen td .card--red {
+    background-color: #852d36;
+    display: block;
+    text-align: center;
+    margin-top: 0.2rem;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0.2rem;
+    overflow: hidden;
+    color: white; }
+.sectorscreen th {
     padding-left: 1.5rem; }
 
 .article {
@@ -817,6 +897,9 @@ table th {
 
 .row .col-2-of-3 {
     width: calc((100% - 2 * 5rem) / 3 * 2 + 5rem); }
+@media (max-width: 56.25em) {
+    .row .col-2-of-3 {
+        width: 100% !important; } }
 
 .row .col-1-of-4 {
     width: calc((100% - 3 * 5rem) / 4); }

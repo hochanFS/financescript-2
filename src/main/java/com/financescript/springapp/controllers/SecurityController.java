@@ -72,7 +72,7 @@ public class SecurityController {
         }
 
         memberService.save(memberDto);
-        return HOME_PAGE;
+        return SIGN_IN_PAGE;
     }
 
     @RequestMapping(value = "/login")
