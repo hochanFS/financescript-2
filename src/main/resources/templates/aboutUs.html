@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/info_fg :: metainfo ('FinanceScript 2.0')">Meta info goes here
+</head>
+<body>
+<div th:replace="fragments/header_fg :: social_media">Social media header goes here</div>
+<div th:replace="fragments/header_fg :: navigation">Navigation bar goes here</div>
+<main class="mainsection">
+    <div class="responsive__margin">
+        <div class="article">
+            <h1 style="color: darkorange">What is FinanceScript</h1>
+            <p>
+                FinanceScript is a public financial platform for ongoing statistical research. While the website provides the Equity Research platform where anyone can contribute to, we will gradually integrate the state of the art tools that the top financial institutions use for making investment decisions. Particularly, our primary research will focus on integrating Monte Carlo simulations and Machine Learning in order to more objectively calculating the intrinsic values of equities.
+                <br><br>
+                Understanding the ever-complex financial world is rewarding and demanding. FinanceScript's mission is to (1) help people that lack finance background to become more financially literate, and (2) save professional's time by doing calculations and providing up-to-date news. FinanceScript attempts to provide accurate information by using reliable resources, and hopes to bring the society one step closer to equal information distribution. Lastly, it is important to mention that some professionals, friends, and colleagues contributed their ideas or inspired us to make this website more relevant. FinanceScript expresses huge gratitude toward them.
+            </p>
+            <h1 style="color: darkorange">Upcoming Research and Features</h1>
+            <ul>
+                <li style="list-style: none;">1. Provide simple quantitative tool for risk assessment and management; primarily contains remastered public Economic Scenario Generator, and documentation for its use</li>
+                <li style="list-style: none;">2. Stock index predictions based on news and sentiment by using Natural Language Processing.</li>
+                <li style="list-style: none;">3. Long-term project: integrate Economic Scenario Generator and machine learning with traditional approach of Equity Research; some convenience tools may be provided</li>
+            </ul>
+            <h1 style="color: darkorange">People</h1>
+            <h3>Hochan Lee</h3>
+                <p>
+                    <a class="feed--a" href="https://www.linkedin.com/in/hochanlee/" target="_blank">Hochan Lee</a> is enthusiastic self-learner, who developed and designed this website. He is also a participant of <a class="feed--a" href="https://codingcompetitions.withgoogle.com/codejam" target="_blank">Google Code Jam</a> and <a class="feed--a" href="https://www.facebook.com/hackercup/" target="_blank">Facebook Hacker Cup</a> coding competitions. Hochan is interested in Software Engineering or Data Scientist career, since he wants to enhance his programming and analytical skills.
+                    <br><br>
+                    He is currently an Actuary at <a class="feed--a" href="https://www.numerix.com" target="_blank">Numerix</a>. His daily tasks include developing Python API automate common tasks, as well as conducting actuarial Monte Carlo analyses for clients.
+                </p>
+        </div>
+    </div>
+</main>
+<div th:replace="fragments/footer_fg :: footer"></div>
+</body>
+</html>

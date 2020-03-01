@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -36,5 +37,13 @@ class IndexControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/notImplemented"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("notYetBuilt"));
+    }
+
+    @Test
+    public void aboutUs() throws Exception {
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc.perform(MockMvcRequestBuilders.get("/about"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("aboutUs"));
     }
 }

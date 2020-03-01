@@ -16,4 +16,9 @@ public class IndexController {
     public String notImplemented() {
         return "notYetBuilt";
     }
+
+    @GetMapping("/about")
+    public String aboutUs() {
+        return "aboutUs";
+    }
 }
